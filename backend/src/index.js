@@ -4,6 +4,7 @@
 import express from 'express';
 import { config } from './config/index.js';
 import routes   from './routes.js';
+import { startDatabricksExportJob } from './jobs/databricksExportScheduler.js';
 import {
   corsMiddleware,
   compressionMiddleware,
