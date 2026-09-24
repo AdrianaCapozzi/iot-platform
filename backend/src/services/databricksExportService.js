@@ -1,24 +1,20 @@
 // src/services/databricksExportService.js
 //
 // Exporta incrementalmente as leituras salvas por saveSensorReadingsBatch()
-// (em db/mongo.js) para uma landing zone (S3/ADLS) consumida pelo Databricks
-// Auto Loader. Necessário porque SensorReading tem TTL de 30 dias — sem essa
-// exportação, o histórico além desse período é perdido para sempre.
+// (em db/mongo.js) para um Volume do Unity Catalog, consumido pelo Databricks
+// Auto Loader. Usa a Databricks Files API (REST) em vez de S3 — não precisa
+// de conta AWS nem IAM, só do token do próprio Databricks.
+//
+// Necessário porque SensorReading tem TTL de 30 dias — sem essa exportação,
+// o histórico além desse período é perdido para sempre.
 
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { randomUUID } from 'crypto';
 import { SensorReading, mongoCacheGet, mongoCacheSet } from '../db/mongo.js';
 import { config } from '../config/index.js';
 import { logger } from '../utils/logger.js';
 
-// Watermark guardado no próprio cache Mongo já existente (CacheEntry),
-// em vez de criar uma collection nova só pra isso. TTL generoso (90 dias)
-// e reescrito a cada execução — nunca chega a expirar de fato enquanto
-// o job estiver rodando normalmente.
 const WATERMARK_KEY = 'pipeline:databricks_export:watermark';
 const WATERMARK_TTL_SECS = 90 * 24 * 60 * 60;
-
-const s3 = new S3Client({ region: config.landing.region });
 
 async function getWatermark() {
   const stored = await mongoCacheGet(WATERMARK_KEY);
@@ -57,8 +53,31 @@ function toNdjson(readings) {
 }
 
 /**
- * Sobe um lote particionado por dia (event_date=YYYY-MM-DD/) — o formato
- * que o Auto Loader do Databricks espera pra listar incrementalmente.
+ * Sobe um arquivo pro Volume via Databricks Files API.
+ * Doc: PUT /api/2.0/fs/files/{file_path}
+ * https://docs.databricks.com/api/workspace/files/upload
+ */
+async function uploadFile(volumeFilePath, body) {
+  const url = `${config.databricks.host}/api/2.0/fs/files${volumeFilePath}`;
+
+  const res = await fetch(url, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${config.databricks.token}`,
+      'Content-Type': 'application/octet-stream',
+    },
+    body,
+  });
+
+  if (!res.ok) {
+    const text = await res.text().catch(() => '');
+    throw new Error(`Upload falhou (${res.status}) em ${volumeFilePath}: ${text}`);
+  }
+}
+
+/**
+ * Sobe um lote particionado por dia (event_date=YYYY-MM-DD/) dentro do
+ * Volume — mesmo formato de particionamento que o Auto Loader espera.
  */
 async function uploadBatch(readings) {
   const byDate = {};
@@ -69,16 +88,10 @@ async function uploadBatch(readings) {
   }
 
   const uploads = Object.entries(byDate).map(async ([dateKey, group]) => {
-    const key = `sensor_readings/event_date=${dateKey}/part-${randomUUID().slice(0, 8)}.json`;
-    await s3.send(
-      new PutObjectCommand({
-        Bucket: config.landing.bucket,
-        Key: key,
-        Body: toNdjson(group),
-        ContentType: 'application/x-ndjson',
-      })
-    );
-    logger.info(`[databricksExportService] s3://${config.landing.bucket}/${key} (${group.length} registros)`);
+    const fileName = `part-${randomUUID().slice(0, 8)}.json`;
+    const volumeFilePath = `${config.databricks.volumePath}/event_date=${dateKey}/${fileName}`;
+    await uploadFile(volumeFilePath, toNdjson(group));
+    logger.info(`[databricksExportService] Upload: ${volumeFilePath} (${group.length} registros)`);
   });
 
   await Promise.all(uploads);
