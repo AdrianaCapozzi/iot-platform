@@ -66,6 +66,7 @@ const server = app.listen(PORT, async () => {
   // Warm-up na startup + scheduler a cada 1 hora
   await refreshData();
   startScheduler();
+  startDatabricksExportJob();
 });
 
 // Timeout generoso para não resetar conexões lentas na primeira carga
