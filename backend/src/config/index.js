@@ -1,6 +1,3 @@
-// src/config/index.js
-// Central configuration - reads from environment variables with sensible defaults
-
 import 'dotenv/config';
 
 export const config = {
@@ -38,4 +35,23 @@ export const config = {
     mongoEnabled: process.env.MONGO_ENABLED === 'true',
     mongoTimeout: 5000,
   },
+
+  landing: {
+    // storage da landing zone consumida pelo databricks auto loader
+    provider: process.env.LANDING_PROVIDER || 's3', // 's3' | 'adls'
+    bucket: process.env.LANDING_BUCKET || null,
+    region: process.env.AWS_REGION || 'us-east-1',
+  },
+
+  // implementando databricks
+
+  databricks: {
+    exportEnabled: process.env.DATABRICKS_EXPORT_ENABLED === 'true',
+    exportBatchLimit: parseInt(process.env.DATABRICKS_EXPORT_BATCH_LIMIT || '10000', 10),
+    exportCron: process.env.DATABRICKS_EXPORT_CRON || '*/15 * * * *',
+    host: process.env.DATABRICKS_HOST || null,
+    token: process.env.DATABRICKS_TOKEN || null,
+    jobId: process.env.DATABRICKS_JOB_ID || null,
+  },
+
 };
