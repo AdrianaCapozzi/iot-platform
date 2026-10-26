@@ -3,7 +3,7 @@
 
 import { Router } from 'express';
 import { getSensors, getICAUD } from './controllers/sensorController.js';
-import { getCities, getRanking, getCityDetail } from './controllers/cityController.js';
+import { getCities, getRanking, getCityDetail, exportCitiesCsv } from './controllers/cityController.js';
 
 const router = Router();
 
@@ -70,11 +70,12 @@ router.get('/sensors/history', async (req, res) => {
     res.status(500).json({ success: false, error: 'Failed to fetch historical data' });
   }
 });
-router.get('/icau',    getICAUD);
+router.get('/icau', getICAUD);
 
-// City routes (order matters: /ranking before /:city)
-router.get('/cities',          getCities);
-router.get('/cities/ranking',  getRanking);
-router.get('/cities/:city',    getCityDetail);
+// City routes — static paths must precede /cities/:city
+router.get('/cities/export.csv', exportCitiesCsv);
+router.get('/cities', getCities);
+router.get('/cities/ranking', getRanking);
+router.get('/cities/:city', getCityDetail);
 
 export default router;
