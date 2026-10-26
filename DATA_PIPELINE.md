@@ -9,6 +9,12 @@ sensor readings are stored in MongoDB; the existing `SensorReading` collection
 uses a 30-day TTL index. Sensor, city and ranking results are also cached for
 the frontend.
 
+Each refresh now fetches one sensor snapshot and reuses it for MongoDB history,
+the sensor cache and city aggregation. If a collection returns no sensors, city
+aggregation falls back to the existing cached snapshot instead of issuing a
+second API collection in that refresh. The MongoDB schema accepts all current
+source identifiers: `sensor_community`, `open_meteo` and `open_meteo_aq`.
+
 `POST /api/refresh` currently starts a refresh in the background. The public
 route and UI status handling are being addressed in a later implementation
 stage; do not expose this endpoint on a public deployment until it is protected.

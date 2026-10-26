@@ -289,20 +289,20 @@ let inflightFetchAllCities = null;
  * Single-flight: enquanto uma agregação está rodando, callers concorrentes
  * recebem a MESMA Promise em vez de iniciar uma nova.
  */
-export async function fetchAllCities() {
+export async function fetchAllCities(sensorSnapshot = undefined) {
   if (inflightFetchAllCities) return inflightFetchAllCities;
-  inflightFetchAllCities = _fetchAllCitiesInner().finally(() => {
+  inflightFetchAllCities = _fetchAllCitiesInner(sensorSnapshot).finally(() => {
     inflightFetchAllCities = null;
   });
   return inflightFetchAllCities;
 }
 
-async function _fetchAllCitiesInner() {
+async function _fetchAllCitiesInner(sensorSnapshot = undefined) {
   logger.info('Agregando sensores por cidade...');
 
   let sensors = [];
   try {
-    sensors = await getAllSensors();
+    sensors = Array.isArray(sensorSnapshot) ? sensorSnapshot : await getAllSensors();
   } catch (err) {
     logger.error('Falha ao buscar sensores:', err.message);
     return [];
