@@ -11,14 +11,13 @@
 
 ---
 
-## 🔑 Connection String Configurada
+## 🔑 Configuração segura da conexão
 
-```
-mongodb+srv://viniciusgnandt_db_user:kk3KyRKh0ppv8j0S@univesp-pi-5.akx42mw.mongodb.net/?appName=univesp-pi-5
-```
-
-**Database:** `iot_platform`
-**User:** `viniciusgnandt_db_user`
+Configure `MONGO_URI` no gerenciador de Secrets do ambiente de execução (ou
+em um `.env` local que não seja versionado). Não inclua a URI, usuário ou senha
+em arquivos do repositório, comandos registrados no histórico do shell ou logs.
+Se uma URI já foi commitada, revogue a credencial correspondente no MongoDB
+Atlas e crie uma nova antes de usar o ambiente.
 
 ---
 
@@ -89,8 +88,9 @@ mongodb+srv://viniciusgnandt_db_user:kk3KyRKh0ppv8j0S@univesp-pi-5.akx42mw.mongo
 No container `iot_backend`, execute:
 
 ```bash
-# Conectar ao MongoDB Atlas
-mongosh "mongodb+srv://viniciusgnandt_db_user:kk3KyRKh0ppv8j0S@univesp-pi-5.akx42mw.mongodb.net/?appName=univesp-pi-5"
+# Execute de dentro de backend para carregar um .env local, se estiver usando um.
+cd backend
+node check_mongo.mjs
 
 # Dentro do mongosh:
 show dbs
@@ -118,7 +118,7 @@ Procure por:
 ### **Método 3: MongoDB Atlas Dashboard**
 
 1. Acesse https://cloud.mongodb.com
-2. Clique no cluster `univesp-pi-5`
+2. Selecione o cluster do projeto
 3. Aba **Collections**
 4. Database: `iot_platform`
 5. Collection: `sensorReadings`

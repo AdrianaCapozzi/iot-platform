@@ -1,6 +1,12 @@
+import 'dotenv/config';
 import mongoose from 'mongoose';
 
-const mongoUri = 'mongodb+srv://viniciusgnandt_db_user:kk3KyRKh0ppv8j0S@univesp-pi-5.akx42mw.mongodb.net/?appName=univesp-pi-5';
+const mongoUri = process.env.MONGO_URI;
+
+if (!mongoUri) {
+  console.error('MONGO_URI não configurada. Defina-a pelo gerenciador de Secrets do ambiente.');
+  process.exit(1);
+}
 
 try {
   await mongoose.connect(mongoUri, { serverSelectionTimeoutMS: 10000 });
@@ -33,9 +39,8 @@ try {
   await mongoose.disconnect();
   console.log('\n✅ Verificação concluída');
 } catch (err) {
-  console.error('❌ Erro:', err.message);
-  if (err.message.includes('IP')) {
-    console.error('\n⚠️  MongoDB Atlas IP Whitelist não configurado!');
-    console.error('   Adicione seu IP em: https://cloud.mongodb.com → Network Access');
-  }
+  // Evita que mensagens do driver imprimam detalhes da conexão.
+  console.error('❌ Falha ao verificar o MongoDB. Confira a configuração de rede e credenciais no Atlas.');
+} finally {
+  await mongoose.disconnect().catch(() => {});
 }
