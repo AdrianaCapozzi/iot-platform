@@ -4,7 +4,6 @@
 import express from 'express';
 import { config } from './config/index.js';
 import routes   from './routes.js';
-import { startDatabricksExportJob } from './jobs/databricksExportScheduler.js';
 import {
   corsMiddleware,
   compressionMiddleware,
@@ -17,6 +16,7 @@ import {
 import { logger } from './utils/logger.js';
 import { connectMongo, saveSensorReadingsBatch } from './db/mongo.js';
 import { setMongoCache } from './utils/cache.js';
+import { collectSensorSnapshot, selectSensorsForAggregation } from './services/sensorSnapshot.js';
 
 const app = express();
 
@@ -66,7 +66,6 @@ const server = app.listen(PORT, async () => {
   // Warm-up na startup + scheduler a cada 1 hora
   await refreshData();
   startScheduler();
-  startDatabricksExportJob();
 });
 
 // Timeout generoso para não resetar conexões lentas na primeira carga
@@ -84,23 +83,19 @@ export async function refreshData() {
     const sensorMod     = await import('./services/sensorService.js');
     const cityMod       = await import('./services/cityService.js');
 
-    // 1. Sensores brutos → salvar histórico no MongoDB
+    // 1. Coleta uma única vez e reaproveita a mesma fotografia para Mongo e cache.
     logger.info('🔄 [1/3] Buscando sensores das APIs...');
-    let allSensorsRaw = [];
-    try {
-      allSensorsRaw = await sensorMod.fetchAllSensorsRaw();
-      if (config.database.mongoEnabled && allSensorsRaw.length > 0) {
-        await saveSensorReadingsBatch(allSensorsRaw);
-        logger.info(`💾 ${allSensorsRaw.length} leituras salvas no MongoDB`);
-      }
-    } catch (err) {
-      logger.warn(`⚠️  Erro ao buscar sensores brutos: ${err.message}`);
-    }
+    const sensors = await collectSensorSnapshot({
+      fetchSensors: () => sensorMod.fetchAllSensors(),
+      persistEnabled: config.database.mongoEnabled,
+      persistReadings: readings => saveSensorReadingsBatch(readings),
+      cacheSensors: readings => cache.set('sensors:all', readings, config.cache.ttlSensors),
+    });
 
-    // 2. Sensores com ICAU-D completo → cache
-    const sensors = await sensorMod.fetchAllSensors();
     if (sensors && sensors.length > 0) {
-      await cache.set('sensors:all', sensors, config.cache.ttlSensors);
+      if (config.database.mongoEnabled) {
+        logger.info(`💾 ${sensors.length} leituras salvas no MongoDB`);
+      }
       logger.info(`✅ [1/3] ${sensors.length} sensores com ICAU-D em cache`);
     } else {
       logger.warn('⚠️  [1/3] Nenhum sensor retornado pelas APIs');
@@ -108,7 +103,11 @@ export async function refreshData() {
 
     // 3. Cidades agregadas → cache
     logger.info('🔄 [2/3] Agregando cidades...');
-    const cities = await cityMod.fetchAllCities();
+    const sensorsForCities = await selectSensorsForAggregation(
+      sensors,
+      () => cache.get('sensors:all')
+    );
+    const cities = await cityMod.fetchAllCities(sensorsForCities);
     if (cities && cities.length > 0) {
       await cache.set('cities:aggregated', cities, config.cache.ttlCities);
       logger.info(`✅ [2/3] ${cities.length} cidades em cache`);

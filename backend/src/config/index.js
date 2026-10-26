@@ -35,16 +35,4 @@ export const config = {
     mongoEnabled: process.env.MONGO_ENABLED === 'true',
     mongoTimeout: 5000,
   },
-
- databricks: {
-    exportEnabled: process.env.DATABRICKS_EXPORT_ENABLED === 'true',
-    exportBatchLimit: parseInt(process.env.DATABRICKS_EXPORT_BATCH_LIMIT || '10000', 10),
-    exportCron: process.env.DATABRICKS_EXPORT_CRON || '*/15 * * * *',
-    host: process.env.DATABRICKS_HOST || null,
-    token: process.env.DATABRICKS_TOKEN || null,
-    jobId: process.env.DATABRICKS_JOB_ID || null,
-    // caminho do Volume no Unity Catalog
-    // ex: /Volumes/ecosense/landing/raw_data/sensor_readings
-    volumePath: process.env.DATABRICKS_VOLUME_PATH || null,
-  },
 };

@@ -3,6 +3,7 @@
 // Graceful fallback if mongoose not installed
 
 import { logger } from '../utils/logger.js';
+import { SENSOR_SOURCES } from '../models/sensor.js';
 
 let mongoose = null;
 let isAvailable = false;
@@ -29,7 +30,7 @@ if (isAvailable && mongoose) {
   const sensorReadingSchema = new Schema(
     {
       sensorId: { type: String, required: true, index: true },
-      source: { type: String, enum: ['sensor_community', 'open_meteo'], required: true },
+      source: { type: String, enum: SENSOR_SOURCES, required: true },
       name: String,
       location: {
         lat: { type: Number, required: true },

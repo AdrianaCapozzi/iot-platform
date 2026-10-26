@@ -17,6 +17,12 @@ const PLAUSIBLE_RANGES = {
   windSpeed:   { min: 0,    max: 100  },  // m/s (~360 km/h)
 };
 
+export const SENSOR_SOURCES = Object.freeze([
+  'sensor_community',
+  'open_meteo',
+  'open_meteo_aq',
+]);
+
 function inRange(field, val) {
   if (val === null || val === undefined || isNaN(val)) return false;
   const r = PLAUSIBLE_RANGES[field];
@@ -45,7 +51,7 @@ function safeMeasurement(field, val) {
  */
 export function createSensor({
   id,
-  source,        // 'opensensemap' | 'sensor_community' | 'openweather'
+  source,        // one of SENSOR_SOURCES
   name,
   lat,
   lon,
