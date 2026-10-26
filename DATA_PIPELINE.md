@@ -33,6 +33,12 @@ Provide `MONGO_URI` through the runtime's secret manager or an untracked local
 history, rotate the corresponding Atlas credential; removing it from the
 current files does not erase earlier commits.
 
+For a read-only Atlas metadata check, run `node check_mongo.mjs` from `backend`
+with `MONGO_URI_READONLY` preferred (or `MONGO_URI`). The checker lists
+collection names, field/type structure from one document, and index metadata;
+it does not print document values or execute writes. It uses only variables
+injected into the process and does not load a local `.env` file.
+
 ## Tests
 
 Run the backend's dependency-free test suite with:

@@ -33,11 +33,20 @@ test('backend startup and configuration have no Databricks dependency', () => {
   assert.doesNotMatch(config, /databricks/i);
 });
 
-test('MongoDB diagnostic reads its connection string from the environment', () => {
+test('MongoDB diagnostic reads environment credentials and reports only schema metadata', () => {
   const diagnostic = readFileSync(path.join(backendRoot, 'check_mongo.mjs'), 'utf8');
 
-  assert.match(diagnostic, /process\.env\.MONGO_URI/);
+  assert.match(diagnostic, /process\.env\.MONGO_URI_READONLY\s*\|\|\s*process\.env\.MONGO_URI/);
   assert.doesNotMatch(diagnostic, /mongodb(?:\+srv)?:\/\/[^\s"']+@[^\s"']+/i);
+  assert.match(diagnostic, /listCollections/);
+  assert.match(diagnostic, /findOne/);
+  assert.match(diagnostic, /collection\.indexes\(\)/);
+  assert.match(diagnostic, /describeDocumentStructure/);
+  assert.doesNotMatch(
+    diagnostic,
+    /countDocuments|deleteMany|deleteOne|dropDatabase|insertMany|findOneAndUpdate|updateOne|\.save\(/i
+  );
+  assert.doesNotMatch(diagnostic, /sample\.(?:sensorId|source|location|measurements)/);
 });
 
 test('MongoDB sensor source enum includes Open-Meteo Air Quality', () => {
