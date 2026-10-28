@@ -15,16 +15,27 @@ aggregation falls back to the existing cached snapshot instead of issuing a
 second API collection in that refresh. The MongoDB schema accepts all current
 source identifiers: `sensor_community`, `open_meteo` and `open_meteo_aq`.
 
-`POST /api/refresh` currently starts a refresh in the background. The public
-route and UI status handling are being addressed in a later implementation
-stage; do not expose this endpoint on a public deployment until it is protected.
+Manual refresh uses `POST /api/refresh` with a bearer token configured as
+`MANUAL_REFRESH_TOKEN`; it is disabled when the secret is absent. Concurrent
+refreshes are rejected, and `GET /api/refresh/status` reports the in-memory
+state. Do not deploy publicly until the token is configured in Secrets.
 
 ## Analytics and exports
 
 The application no longer requires a Databricks workspace, token, job, or
 scheduled export. Databricks-specific integration code and configuration have
-been removed. CSV export for Power BI and retention of original API payloads
-are not implemented in this stage.
+been removed.
+
+`GET /api/sensors/export.csv` exports the existing `SensorReading` history for
+optional `from`, `to`, and `source` filters. The default window is 30 days;
+timestamps are written as UTC ISO 8601, with UTF-8 BOM and RFC 4180 escaping.
+The route streams from MongoDB and returns `503` when MongoDB is not connected.
+
+API adapters retain each original source record as an internal symbol while
+normalizing readings. When MongoDB persistence is enabled, batches store that
+payload in the optional `rawPayload` field of the existing `SensorReading`
+collection; the symbol is omitted from JSON responses. No new collection or
+index is defined. Existing Atlas records have not been backfilled or changed.
 
 ## MongoDB connection safety
 
@@ -41,11 +52,13 @@ injected into the process and does not load a local `.env` file.
 
 ## Tests
 
-Run the backend's dependency-free test suite with:
+Run the backend tests using its already-declared dependencies:
 
 ```sh
 cd backend
+npm install
 npm test
 ```
 
 The test command uses the Node.js built-in test runner (Node.js 18 or newer).
+Unit tests do not connect to MongoDB or write to external services.

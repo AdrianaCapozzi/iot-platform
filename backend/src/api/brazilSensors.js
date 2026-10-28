@@ -3,7 +3,7 @@
 // Open-Meteo is free, no API key required, provides temp/humidity/wind
 
 import axios from 'axios';
-import { createSensor } from '../models/sensor.js';
+import { attachRawPayload, createSensor } from '../models/sensor.js';
 import { logger } from '../utils/logger.js';
 
 // ─── City lists ──────────────────────────────────────────────────────────────
@@ -148,7 +148,7 @@ async function fetchOpenMeteo(cities, tag = '') {
       const city = cities[i];
       const country = city.country;
 
-      sensors.push(createSensor({
+      const sensor = createSensor({
         id:          `openmeteo_${city.name.toLowerCase().replace(/\s/g, '_')}`,
         source:      'open_meteo',
         name:        `${city.name} - Open-Meteo`,
@@ -165,7 +165,8 @@ async function fetchOpenMeteo(cities, tag = '') {
         deviceType:  'Weather Station (Open-Meteo)',
         sensorCount: 3,
         exposure:    'outdoor',
-      }));
+      });
+      sensors.push(attachRawPayload(sensor, results[i]));
     }
   } catch (err) {
     // Fallback: fetch one by one if batch fails
@@ -182,7 +183,7 @@ async function fetchOpenMeteo(cities, tag = '') {
         if (!current) continue;
 
         const country = city.country;
-        sensors.push(createSensor({
+        const sensor = createSensor({
           id:          `openmeteo_${city.name.toLowerCase().replace(/\s/g, '_')}`,
           source:      'open_meteo',
           name:        `${city.name} - Open-Meteo`,
@@ -199,7 +200,8 @@ async function fetchOpenMeteo(cities, tag = '') {
           deviceType:  'Weather Station (Open-Meteo)',
           sensorCount: 3,
           exposure:    'outdoor',
-        }));
+        });
+        sensors.push(attachRawPayload(sensor, response.data));
       } catch {
         // skip silently
       }
@@ -238,7 +240,7 @@ async function fetchOpenMeteoAirQuality(cities, tag = '') {
       if (!current) continue;
 
       const city = cities[i];
-      sensors.push(createSensor({
+      const sensor = createSensor({
         id:          `openmeteo_aq_${city.name.toLowerCase().replace(/\s/g, '_')}`,
         source:      'open_meteo_aq',
         name:        `${city.name} - Open-Meteo Air Quality`,
@@ -255,7 +257,8 @@ async function fetchOpenMeteoAirQuality(cities, tag = '') {
         deviceType:  'Air Quality Model (CAMS / Open-Meteo)',
         sensorCount: 1,
         exposure:    'outdoor',
-      }));
+      });
+      sensors.push(attachRawPayload(sensor, results[i]));
     }
   } catch (err) {
     logger.warn(`Open-Meteo Air Quality batch failed${tag}, falling back to individual: ${err.message}`);
@@ -270,7 +273,7 @@ async function fetchOpenMeteoAirQuality(cities, tag = '') {
         const current = response.data?.current;
         if (!current) continue;
 
-        sensors.push(createSensor({
+        const sensor = createSensor({
           id:          `openmeteo_aq_${city.name.toLowerCase().replace(/\s/g, '_')}`,
           source:      'open_meteo_aq',
           name:        `${city.name} - Open-Meteo Air Quality`,
@@ -287,7 +290,8 @@ async function fetchOpenMeteoAirQuality(cities, tag = '') {
           deviceType:  'Air Quality Model (CAMS / Open-Meteo)',
           sensorCount: 1,
           exposure:    'outdoor',
-        }));
+        });
+        sensors.push(attachRawPayload(sensor, response.data));
       } catch {
         // skip silently
       }

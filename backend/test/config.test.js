@@ -4,9 +4,9 @@ import { execFileSync } from 'node:child_process';
 import { readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { SENSOR_SOURCES } from '../src/models/sensor.js';
+import { attachRawPayload, RAW_PAYLOAD, SENSOR_SOURCES } from '../src/models/sensor.js';
 import { collectSensorSnapshot, selectSensorsForAggregation } from '../src/services/sensorSnapshot.js';
-import { SensorReading } from '../src/db/mongo.js';
+import { mapSensorToReading, SensorReading } from '../src/db/mongo.js';
 
 const backendRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const sourceRoot = path.join(backendRoot, 'src');
@@ -49,15 +49,31 @@ test('MongoDB diagnostic reads environment credentials and reports only schema m
   assert.doesNotMatch(diagnostic, /sample\.(?:sensorId|source|location|measurements)/);
 });
 
-test('MongoDB sensor source enum includes Open-Meteo Air Quality', () => {
+test('MongoDB keeps Open-Meteo AQ and raw source payload in the existing SensorReading model', () => {
   assert.ok(SENSOR_SOURCES.includes('open_meteo_aq'));
   assert.ok(SensorReading, 'Mongoose model must be available from the declared dependency');
+  assert.equal(SensorReading.collection.name, 'sensorreadings');
+  assert.equal(SensorReading.schema.path('rawPayload').instance, 'Mixed');
+
+  const rawPayload = { originalField: 'retained-in-db-only' };
+  const sensor = attachRawPayload({
+    id: 'aq-validation-test',
+    source: 'open_meteo_aq',
+    name: 'AQ fixture',
+    location: { lat: 0, lon: 0 },
+    measurements: { pm25: 12 },
+    lastSeen: '2026-10-27T12:00:00.000Z',
+  }, rawPayload);
+  assert.strictEqual(sensor[RAW_PAYLOAD], rawPayload);
+  assert.strictEqual(mapSensorToReading(sensor).rawPayload, rawPayload);
+  assert.doesNotMatch(JSON.stringify(sensor), /retained-in-db-only/);
 
   const reading = new SensorReading({
     sensorId: 'aq-validation-test',
     source: 'open_meteo_aq',
     location: { lat: 0, lon: 0 },
     measurements: { pm25: 12 },
+    rawPayload: { current: { pm2_5: 12 } },
     recordedAt: new Date(),
   });
 

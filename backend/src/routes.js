@@ -4,6 +4,9 @@
 import { Router } from 'express';
 import { getSensors, getICAUD } from './controllers/sensorController.js';
 import { getCities, getRanking, getCityDetail } from './controllers/cityController.js';
+import { exportSensorCsv } from './controllers/exportController.js';
+import { config } from './config/index.js';
+import { isValidBearerToken } from './middleware/manualRefreshAuth.js';
 
 const router = Router();
 
@@ -14,13 +17,42 @@ router.get('/health', (req, res) => {
 
 // Manual refresh trigger (útil para forçar atualização sem reiniciar)
 router.post('/refresh', async (req, res) => {
-  try {
-    const { refreshData } = await import('./index.js');
-    res.json({ success: true, message: 'Atualização iniciada em background' });
-    refreshData(); // não await — roda em background
-  } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
+  if (!config.security.manualRefreshToken) {
+    return res.status(503).json({
+      success: false,
+      error: 'Atualização manual desabilitada: configure MANUAL_REFRESH_TOKEN.',
+    });
   }
+
+  if (!isValidBearerToken(req.get('authorization'), config.security.manualRefreshToken)) {
+    return res.status(401).json({ success: false, error: 'Não autorizado.' });
+  }
+
+  try {
+    const { startManualRefresh, getRefreshStatus } = await import('./index.js');
+    const refresh = startManualRefresh();
+    if (!refresh.started) {
+      return res.status(409).json({
+        success: false,
+        error: 'Uma atualização já está em andamento.',
+        data: getRefreshStatus(),
+      });
+    }
+
+    void refresh.promise;
+    return res.status(202).json({
+      success: true,
+      message: 'Atualização iniciada.',
+      data: getRefreshStatus(),
+    });
+  } catch {
+    return res.status(500).json({ success: false, error: 'Não foi possível iniciar a atualização.' });
+  }
+});
+
+router.get('/refresh/status', async (_req, res) => {
+  const { getRefreshStatus } = await import('./index.js');
+  return res.json({ success: true, data: getRefreshStatus() });
 });
 
 // Debug: verificar estado do sistema
@@ -56,6 +88,7 @@ router.get('/debug', async (req, res) => {
 
 // Sensor routes
 router.get('/sensors', getSensors);
+router.get('/sensors/export.csv', exportSensorCsv);
 router.get('/sensors/history', async (req, res) => {
   try {
     const { period = 'week' } = req.query;

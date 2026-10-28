@@ -23,6 +23,18 @@ export const SENSOR_SOURCES = Object.freeze([
   'open_meteo_aq',
 ]);
 
+// Symbol metadata survives object spreads inside the backend but is omitted by
+// JSON serialization, so source payloads are not exposed by the existing API.
+export const RAW_PAYLOAD = Symbol.for('ecosense.rawPayload');
+
+export function attachRawPayload(sensor, rawPayload) {
+  Object.defineProperty(sensor, RAW_PAYLOAD, {
+    value: rawPayload,
+    enumerable: true,
+  });
+  return sensor;
+}
+
 function inRange(field, val) {
   if (val === null || val === undefined || isNaN(val)) return false;
   const r = PLAUSIBLE_RANGES[field];

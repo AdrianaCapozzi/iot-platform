@@ -3,7 +3,7 @@
 // Graceful fallback if mongoose not installed
 
 import { logger } from '../utils/logger.js';
-import { SENSOR_SOURCES } from '../models/sensor.js';
+import { RAW_PAYLOAD, SENSOR_SOURCES } from '../models/sensor.js';
 
 let mongoose = null;
 let isAvailable = false;
@@ -52,6 +52,7 @@ if (isAvailable && mongoose) {
       deviceType: String,
       sensorCount: Number,
       exposure: { type: String, enum: ['indoor', 'outdoor', null] },
+      rawPayload: mongoose.Schema.Types.Mixed,
       recordedAt: { type: Date, default: Date.now },
     },
     { timestamps: true }
@@ -124,25 +125,34 @@ export async function disconnectMongo() {
   }
 }
 
+export function isMongoConnected() {
+  return Boolean(isAvailable && mongoose?.connection?.readyState === 1);
+}
+
 /**
  * Save a sensor reading snapshot
  */
+export function mapSensorToReading(sensor) {
+  return {
+    sensorId: sensor.id,
+    source: sensor.source,
+    name: sensor.name,
+    location: sensor.location,
+    measurements: sensor.measurements,
+    icaud: sensor.icaud,
+    deviceType: sensor.deviceType,
+    sensorCount: sensor.sensorCount,
+    exposure: sensor.exposure,
+    rawPayload: sensor[RAW_PAYLOAD] ?? undefined,
+    recordedAt: new Date(sensor.lastSeen || Date.now()),
+  };
+}
+
 export async function saveSensorReading(sensor) {
   if (!isAvailable || !SensorReading) return;
 
   try {
-    const reading = new SensorReading({
-      sensorId: sensor.id,
-      source: sensor.source,
-      name: sensor.name,
-      location: sensor.location,
-      measurements: sensor.measurements,
-      icaud: sensor.icaud,
-      deviceType: sensor.deviceType,
-      sensorCount: sensor.sensorCount,
-      exposure: sensor.exposure,
-      recordedAt: new Date(sensor.lastSeen || Date.now()),
-    });
+    const reading = new SensorReading(mapSensorToReading(sensor));
     await reading.save();
   } catch (err) {
     logger.debug('SensorReading save error:', err.message);
@@ -156,18 +166,7 @@ export async function saveSensorReadingsBatch(sensors) {
   if (!isAvailable || !SensorReading || sensors.length === 0) return;
 
   try {
-    const readings = sensors.map(sensor => ({
-      sensorId: sensor.id,
-      source: sensor.source,
-      name: sensor.name,
-      location: sensor.location,
-      measurements: sensor.measurements,
-      icaud: sensor.icaud,
-      deviceType: sensor.deviceType,
-      sensorCount: sensor.sensorCount,
-      exposure: sensor.exposure,
-      recordedAt: new Date(sensor.lastSeen || Date.now()),
-    }));
+    const readings = sensors.map(mapSensorToReading);
     await SensorReading.insertMany(readings, { ordered: false });
   } catch (err) {
     logger.debug('SensorReading batch save error:', err.message);
@@ -211,6 +210,22 @@ export async function getSensorReadingsNearLocation(lat, lon, radiusKm = 25, hou
     logger.debug('getSensorReadingsNearLocation error:', err.message);
     return [];
   }
+}
+
+/**
+ * Read-only cursor for CSV export from the existing SensorReading collection.
+ */
+export function getSensorReadingsCursor({ from, to, source } = {}) {
+  if (!isMongoConnected() || !SensorReading) return null;
+
+  const filter = { recordedAt: { $gte: from, $lte: to } };
+  if (source) filter.source = source;
+
+  return SensorReading.find(filter)
+    .select('sensorId source name location measurements icaud deviceType sensorCount exposure recordedAt')
+    .sort({ recordedAt: 1, sensorId: 1 })
+    .lean()
+    .cursor({ batchSize: 500 });
 }
 
 /**

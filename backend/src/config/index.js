@@ -35,4 +35,8 @@ export const config = {
     mongoEnabled: process.env.MONGO_ENABLED === 'true',
     mongoTimeout: 5000,
   },
+
+  security: {
+    manualRefreshToken: process.env.MANUAL_REFRESH_TOKEN || null,
+  },
 };

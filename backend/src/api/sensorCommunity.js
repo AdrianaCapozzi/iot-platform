@@ -4,7 +4,7 @@
 
 import axios from 'axios';
 import { config } from '../config/index.js';
-import { createSensor } from '../models/sensor.js';
+import { attachRawPayload, createSensor } from '../models/sensor.js';
 import { logger } from '../utils/logger.js';
 
 const BASE_URL = config.apis.sensorCommunity.baseUrl;
@@ -62,7 +62,7 @@ export async function fetchSensorCommunitySensors(options = {}) {
       const loc = entry.location;
       if (!loc) continue;
       const key = `${parseFloat(loc.latitude).toFixed(3)},${parseFloat(loc.longitude).toFixed(3)}`;
-      tempMap.set(key, entry.sensordatavalues || []);
+      tempMap.set(key, entry);
     }
 
     // Map PM entries and merge temperature data
@@ -84,10 +84,11 @@ export async function fetchSensorCommunitySensors(options = {}) {
 
       // Try to find matching temp data by location
       const locKey = `${lat.toFixed(3)},${lon.toFixed(3)}`;
-      const tempValues = tempMap.get(locKey) || [];
+      const tempEntry = tempMap.get(locKey) || null;
+      const tempValues = tempEntry?.sensordatavalues || [];
       const allValues  = [...(entry.sensordatavalues || []), ...tempValues];
 
-      sensors.push(createSensor({
+      const sensor = createSensor({
         id:          sensorId,
         source:      'sensor_community',
         name:        `SC-${entry.sensor?.id || entry.id}`,
@@ -104,6 +105,10 @@ export async function fetchSensorCommunitySensors(options = {}) {
         deviceType:  entry.sensor?.sensor_type?.name || 'SDS011',
         sensorCount: 2,
         exposure:    'outdoor',
+      });
+      sensors.push(attachRawPayload(sensor, {
+        pm: entry,
+        temperature: tempEntry,
       }));
     }
 

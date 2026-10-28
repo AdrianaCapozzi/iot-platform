@@ -17,8 +17,10 @@ import { logger } from './utils/logger.js';
 import { connectMongo, saveSensorReadingsBatch } from './db/mongo.js';
 import { setMongoCache } from './utils/cache.js';
 import { collectSensorSnapshot, selectSensorsForAggregation } from './services/sensorSnapshot.js';
+import { createRefreshCoordinator } from './services/refreshCoordinator.js';
 
 const app = express();
+const refreshCoordinator = createRefreshCoordinator();
 
 // Necessário para express-rate-limit funcionar corretamente atrás de nginx/proxy
 app.set('trust proxy', 1);
@@ -75,7 +77,19 @@ server.setTimeout(120_000);
  * Busca todos os dados das APIs externas, persiste no MongoDB
  * e atualiza o cache. Chamado na startup e pelo scheduler.
  */
-export async function refreshData() {
+export function getRefreshStatus() {
+  return refreshCoordinator.getStatus();
+}
+
+export function startManualRefresh() {
+  return refreshCoordinator.start(runRefreshCycle);
+}
+
+export function refreshData() {
+  return refreshCoordinator.start(runRefreshCycle).promise;
+}
+
+async function runRefreshCycle() {
   logger.info('🔄 Atualizando dados das APIs externas...');
   try {
     const { cache }     = await import('./utils/cache.js');
