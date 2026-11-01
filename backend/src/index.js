@@ -15,7 +15,7 @@ import {
   notFoundHandler,
 } from './middleware/index.js';
 import { logger } from './utils/logger.js';
-import { connectMongo, saveSensorReadingsBatch } from './db/mongo.js';
+import { connectMongo, saveSensorReadingsBatch, saveCityHourlyStats } from './db/mongo.js';
 import { setMongoCache } from './utils/cache.js';
 
 const app = express();
@@ -112,6 +112,11 @@ export async function refreshData() {
     if (cities && cities.length > 0) {
       await cache.set('cities:aggregated', cities, config.cache.ttlCities);
       logger.info(`✅ [2/3] ${cities.length} cidades em cache`);
+
+      if (config.database.mongoEnabled) {
+        await saveCityHourlyStats(cities);
+        logger.info(`💾 Resumo horário de ${cities.length} cidades salvo no MongoDB`);
+      }
     }
 
     // 4. Ranking → cache

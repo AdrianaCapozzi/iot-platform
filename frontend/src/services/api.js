@@ -37,6 +37,10 @@ export const api = {
   getCity: (name) =>
     client.get(`/cities/${encodeURIComponent(name)}`),
 
+  /** Get pre-computed hourly ICAU-D history for a city */
+  getCityHistory: (name, period = 'week') =>
+    client.get(`/cities/${encodeURIComponent(name)}/history`, { params: { period } }),
+
   /** Calculate ICAU-D for a coordinate */
   getICAUD: (lat, lon) =>
     client.get('/icau', { params: { lat, lon } }),
@@ -44,6 +48,10 @@ export const api = {
   /** Get historical sensor averages */
   getSensorsHistory: (period = 'week') =>
     client.get('/sensors/history', { params: { period } }),
+
+  /** Get active alerts (pollution spikes + stuck sensors) */
+  getAlerts: () =>
+    client.get('/alerts'),
 
   /** Health check */
   health: () =>

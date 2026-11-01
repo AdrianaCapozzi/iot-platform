@@ -2,8 +2,8 @@
 // Central route definitions
 
 import { Router } from 'express';
-import { getSensors, getICAUD } from './controllers/sensorController.js';
-import { getCities, getRanking, getCityDetail } from './controllers/cityController.js';
+import { getSensors, getICAUD, getSensorAlerts } from './controllers/sensorController.js';
+import { getCities, getRanking, getCityDetail, getCityHistory } from './controllers/cityController.js';
 
 const router = Router();
 
@@ -71,10 +71,12 @@ router.get('/sensors/history', async (req, res) => {
   }
 });
 router.get('/icau',    getICAUD);
+router.get('/alerts',  getSensorAlerts);
 
 // City routes (order matters: /ranking before /:city)
-router.get('/cities',          getCities);
-router.get('/cities/ranking',  getRanking);
-router.get('/cities/:city',    getCityDetail);
+router.get('/cities',            getCities);
+router.get('/cities/ranking',    getRanking);
+router.get('/cities/:city/history', getCityHistory);
+router.get('/cities/:city',      getCityDetail);
 
 export default router;

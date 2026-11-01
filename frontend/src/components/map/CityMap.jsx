@@ -89,7 +89,7 @@ export default function CityMap({ cities = [], sensors = [], center = [-14.2350,
                         <span className="text-xs text-gray-600">{t(`classifications.${cls?.label}`, cls?.label)}</span>
                       </div>
                     ) : (
-                      <span className="text-gray-400 text-xs">{t('table.na')}</span>
+                      <span className="text-gray-500 text-xs">{t('table.na')}</span>
                     )}
                   </div>
 

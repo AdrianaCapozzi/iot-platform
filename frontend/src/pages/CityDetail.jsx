@@ -2,15 +2,33 @@
 // Detailed view for a single city
 
 import { useParams, Link } from 'react-router-dom';
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useCity } from '../hooks/useEnvironmentalData.js';
+import { useCity, useCityHistory } from '../hooks/useEnvironmentalData.js';
 import {
   ScoreRing, StatCard, ClassificationBadge, Spinner, ErrorAlert, EmptyState
 } from '../components/ui/index.jsx';
-import { CityMeasurementsChart } from '../components/charts/EnvironmentalChart.jsx';
+import { CityMeasurementsChart, CityICAUDHistoryChart } from '../components/charts/EnvironmentalChart.jsx';
 import { formatMeasurement } from '../utils/icaud.js';
 import { formatFullDateTimeBRT, formatRelativeTimeBRT } from '../utils/dateFormatter.js';
+import { computeTrend, TREND_META } from '../utils/trend.js';
+
+/** Trend badge — "📈 +4.2 (24h)" style, from pre-computed hourly history */
+function TrendBadge({ delta, label, periodLabel }) {
+  if (delta === null || label === null) return null;
+  const meta = TREND_META[label];
+  const sign = delta > 0 ? '+' : '';
+  return (
+    <span
+      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold"
+      style={{ backgroundColor: `${meta.color}1a`, color: meta.color }}
+      title={`ICAU-D ${sign}${delta} nas últimas ${periodLabel}`}
+    >
+      <span>{meta.icon}</span>
+      {sign}{delta} ({periodLabel})
+    </span>
+  );
+}
 
 const SensorMap = lazy(() => import('../components/map/SensorMap.jsx'));
 
@@ -32,7 +50,7 @@ function ComponentRow({ label, value, weight, icon }) {
         <span className="text-sm font-mono font-semibold text-gray-700 w-10 text-right">
           {value.toFixed(1)}
         </span>
-        <span className="text-xs text-gray-400 w-10">×{(weight * 100).toFixed(0)}%</span>
+        <span className="text-xs text-gray-500 w-10">×{(weight * 100).toFixed(0)}%</span>
       </div>
     </div>
   );
@@ -44,6 +62,12 @@ export default function CityDetail() {
   const cityName = decodeURIComponent(cityParam);
 
   const { data: city, isLoading, error } = useCity(cityName);
+  const [historyPeriod, setHistoryPeriod] = useState('week');
+  const { data: history = [], isLoading: historyLoading } = useCityHistory(cityName, historyPeriod);
+  // Tendência sempre usa a janela de 7 dias, independente do toggle do gráfico
+  // (React Query reaproveita o cache quando historyPeriod já é 'week')
+  const { data: weekHistory = [] } = useCityHistory(cityName, 'week');
+  const trend = computeTrend(weekHistory);
 
   if (isLoading) return <div className="py-20"><Spinner size="lg" /></div>;
   if (error) return <ErrorAlert message={`'${cityName}' — ${t('common.noData')}`} />;
@@ -89,10 +113,16 @@ export default function CityDetail() {
                   color={icaud.classification.color}
                 />
               )}
-              <span className="text-xs text-gray-400">
+              <span className="text-xs text-gray-500">
                 {t('cityDetail.activeSensors', { count: sensorCount, plural: sensorCount !== 1 ? 's' : '' })}
               </span>
             </div>
+            {(trend.delta24h !== null || trend.delta7d !== null) && (
+              <div className="flex items-center gap-2 mt-3">
+                <TrendBadge delta={trend.delta24h} label={trend.label24h} periodLabel="24h" />
+                <TrendBadge delta={trend.delta7d} label={trend.label7d} periodLabel="7d" />
+              </div>
+            )}
           </div>
           <ScoreRing score={icaud?.score} size={130} />
         </div>
@@ -132,6 +162,38 @@ export default function CityDetail() {
         </div>
       </div>
 
+      {/* ICAU-D history */}
+      <div className="bg-white rounded-xl border border-gray-100 p-5 shadow-sm">
+        <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
+          <h2 className="text-base font-semibold text-gray-800">Histórico do ICAU-D</h2>
+          <div className="flex gap-2" role="group" aria-label="Período do histórico">
+            <button
+              onClick={() => setHistoryPeriod('week')}
+              aria-pressed={historyPeriod === 'week'}
+              className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-1 ${
+                historyPeriod === 'week' ? 'bg-green-700 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+            >
+              7 dias
+            </button>
+            <button
+              onClick={() => setHistoryPeriod('month')}
+              aria-pressed={historyPeriod === 'month'}
+              className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-1 ${
+                historyPeriod === 'month' ? 'bg-green-700 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+            >
+              30 dias
+            </button>
+          </div>
+        </div>
+        {historyLoading ? (
+          <div className="flex justify-center py-10"><Spinner /></div>
+        ) : (
+          <CityICAUDHistoryChart history={history} />
+        )}
+      </div>
+
       {/* City map */}
       <div className="bg-white rounded-xl border border-gray-100 p-5 shadow-sm">
         <h2 className="text-base font-semibold text-gray-800 mb-4">{t('cityDetail.location')}</h2>
@@ -146,7 +208,7 @@ export default function CityDetail() {
       </div>
 
       {/* Metadata */}
-      <div className="text-xs text-gray-400 text-right">
+      <div className="text-xs text-gray-500 text-right">
         <span title={formatFullDateTimeBRT(city.lastSeen || city.updatedAt) + ' (BRT)'} className="cursor-help">
           {t('cityDetail.lastReading', { relative: formatRelativeTimeBRT(city.lastSeen || city.updatedAt), full: formatFullDateTimeBRT(city.lastSeen || city.updatedAt) })}
         </span>

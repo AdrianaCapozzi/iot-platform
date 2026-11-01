@@ -1,6 +1,7 @@
 // src/controllers/cityController.js
 
 import { getAllCities, getCitiesRanking, getCityByName } from '../services/cityService.js';
+import { getCityHourlyHistory } from '../db/mongo.js';
 import { logger } from '../utils/logger.js';
 
 /**
@@ -82,6 +83,34 @@ export async function getRanking(req, res) {
       message: 'Dados temporariamente indisponíveis. Tente novamente em breve.',
       timestamp: new Date().toISOString(),
     });
+  }
+}
+
+/**
+ * GET /cities/:city/history
+ * Returns pre-computed hourly ICAU-D/measurement history for a city
+ * (Fase 2 do plano de dados — lê direto do resumo, sem recalcular)
+ * Query params: period ('week' | 'month', default 'week')
+ */
+export async function getCityHistory(req, res) {
+  try {
+    const { city } = req.params;
+    const period = req.query.period === 'month' ? 'month' : 'week';
+    const daysBack = period === 'month' ? 30 : 7;
+
+    const history = await getCityHourlyHistory(decodeURIComponent(city), daysBack);
+
+    res.json({
+      success: true,
+      city: decodeURIComponent(city),
+      period,
+      count: history.length,
+      data: history,
+      timestamp: new Date().toISOString(),
+    });
+  } catch (err) {
+    logger.error('getCityHistory error:', err.message);
+    res.status(500).json({ success: false, error: 'Failed to fetch city history' });
   }
 }
 

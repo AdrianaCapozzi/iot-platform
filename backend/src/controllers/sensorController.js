@@ -1,6 +1,7 @@
 // src/controllers/sensorController.js
 
 import { getAllSensors, getSensorsNear, getICAUDForLocation } from '../services/sensorService.js';
+import { getAlerts } from '../services/alertService.js';
 import { logger } from '../utils/logger.js';
 
 /**
@@ -33,6 +34,25 @@ export async function getSensors(req, res) {
   } catch (err) {
     logger.error('getSensors error:', err.message);
     res.status(500).json({ success: false, error: 'Failed to fetch sensors' });
+  }
+}
+
+/**
+ * GET /alerts
+ * Picos de poluição e sensores com problema de qualidade (Fase 3)
+ */
+export async function getSensorAlerts(req, res) {
+  try {
+    const alerts = await getAlerts();
+    res.json({
+      success: true,
+      count: alerts.length,
+      data: alerts,
+      timestamp: new Date().toISOString(),
+    });
+  } catch (err) {
+    logger.error('getSensorAlerts error:', err.message);
+    res.status(500).json({ success: false, error: 'Failed to fetch alerts' });
   }
 }
 

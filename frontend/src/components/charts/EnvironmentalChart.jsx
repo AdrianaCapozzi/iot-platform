@@ -6,7 +6,7 @@ import {
   CategoryScale, LinearScale, BarElement, LineElement,
   PointElement, Title, Tooltip, Legend, Filler, ArcElement,
 } from 'chart.js';
-import { Bar, Doughnut } from 'react-chartjs-2';
+import { Bar, Doughnut, Line } from 'react-chartjs-2';
 import { CLASSIFICATIONS } from '../../utils/icaud.js';
 
 ChartJS.register(
@@ -49,8 +49,10 @@ export function TopCitiesChart({ cities = [] }) {
     }],
   };
 
+  const summary = top10.map(c => `${c.name}: ${(c.icaud?.score ?? 0).toFixed(0)}`).join(', ');
+
   return (
-    <div style={{ height: 300 }}>
+    <div role="img" aria-label={`Gráfico de barras — top 10 cidades por ICAU-D: ${summary}`} style={{ height: 300 }}>
       <Bar data={data} options={{
         ...defaultOptions,
         plugins: {
@@ -92,8 +94,10 @@ export function ClassificationDonut({ cities = [] }) {
     }],
   };
 
+  const donutSummary = CLASSIFICATIONS.map((c, i) => `${c.label}: ${counts[i]}`).join(', ');
+
   return (
-    <div style={{ height: 260 }}>
+    <div role="img" aria-label={`Gráfico de rosca — distribuição de cidades por classificação: ${donutSummary}`} style={{ height: 260 }}>
       <Doughnut data={data} options={{
         responsive: true,
         maintainAspectRatio: false,
@@ -108,6 +112,66 @@ export function ClassificationDonut({ cities = [] }) {
               label: ctx => `${ctx.label}: ${ctx.parsed} cities`,
             },
           },
+        },
+      }} />
+    </div>
+  );
+}
+
+/**
+ * ICAU-D history line chart for a single city — reads pre-computed hourly
+ * summaries from GET /cities/:city/history (Fase 2 do plano de dados).
+ */
+export function CityICAUDHistoryChart({ history = [] }) {
+  const points = history.filter(h => h.icaud?.score !== null && h.icaud?.score !== undefined);
+
+  if (points.length < 2) {
+    return (
+      <div role="status" className="flex items-center justify-center h-40 text-sm text-gray-500">
+        Histórico ainda sendo acumulado — volte em algumas horas.
+      </div>
+    );
+  }
+
+  const labels = points.map(p =>
+    new Date(p.hour).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit' })
+  );
+  const scores = points.map(p => p.icaud.score);
+
+  const data = {
+    labels,
+    datasets: [{
+      label: 'ICAU-D',
+      data: scores,
+      borderColor: '#16a34a',
+      backgroundColor: 'rgba(34, 197, 94, 0.12)',
+      pointRadius: points.length > 40 ? 0 : 3,
+      pointBackgroundColor: '#16a34a',
+      tension: 0.3,
+      fill: true,
+      borderWidth: 2,
+    }],
+  };
+
+  const firstScore = scores[0].toFixed(0);
+  const lastScore = scores[scores.length - 1].toFixed(0);
+  const trendSummary = `ICAU-D variou de ${firstScore} para ${lastScore} ao longo de ${points.length} leituras (mínimo ${Math.min(...scores).toFixed(0)}, máximo ${Math.max(...scores).toFixed(0)})`;
+
+  return (
+    <div role="img" aria-label={`Gráfico de linha — histórico do ICAU-D: ${trendSummary}`} style={{ height: 260 }}>
+      <Line data={data} options={{
+        ...defaultOptions,
+        plugins: {
+          ...defaultOptions.plugins,
+          legend: { display: false },
+          tooltip: {
+            callbacks: { label: ctx => `ICAU-D: ${ctx.parsed.y.toFixed(1)}` },
+          },
+        },
+        scales: {
+          ...defaultOptions.scales,
+          y: { ...defaultOptions.scales.y, min: 0, max: 100 },
+          x: { ...defaultOptions.scales.x, ticks: { ...defaultOptions.scales.x.ticks, maxTicksLimit: 8 } },
         },
       }} />
     </div>
@@ -162,8 +226,10 @@ export function CityMeasurementsChart({ measurements = {} }) {
     }],
   };
 
+  const measurementsSummary = labels.map((l, i) => `${l}: ${values[i]}`).join(', ');
+
   return (
-    <div style={{ height: 260 }}>
+    <div role="img" aria-label={`Gráfico de barras — medições atuais: ${measurementsSummary}`} style={{ height: 260 }}>
       <Bar data={data} options={{
         ...defaultOptions,
         plugins: { ...defaultOptions.plugins, legend: { display: false } },

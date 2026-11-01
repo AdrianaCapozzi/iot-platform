@@ -92,6 +92,26 @@ export function useSensorsHistoryFallback({ enabled = true } = {}) {
   });
 }
 
+export function useCityHistory(name, period = 'week') {
+  return useQuery({
+    queryKey: ['city-history', name, period],
+    queryFn:  () => api.getCityHistory(name, period),
+    staleTime: STALE_TIME,
+    enabled: Boolean(name),
+    select: res => res.data ?? [],
+  });
+}
+
+export function useAlerts() {
+  return useQuery({
+    queryKey: ['alerts'],
+    queryFn:  () => api.getAlerts(),
+    staleTime: 5 * 60 * 1000, // 5 min — alertas devem ficar razoavelmente frescos
+    refetchInterval: 5 * 60 * 1000,
+    select: res => res.data ?? [],
+  });
+}
+
 export function useICAUD(lat, lon) {
   return useQuery({
     queryKey: ['icaud', lat, lon],

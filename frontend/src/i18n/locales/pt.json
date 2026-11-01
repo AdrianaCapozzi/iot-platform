@@ -5,7 +5,58 @@
     "map": "Mapa",
     "sensors": "Sensores",
     "howItWorks": "Como Funciona",
-    "platform": "Plataforma IoT"
+    "platform": "Plataforma IoT",
+    "skipToContent": "Pular para o conteúdo",
+    "mainNavigation": "Navegação principal",
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu",
+    "switchLanguage": "Mudar para inglês"
+  },
+  "tour": {
+    "dialogLabel": "Tour guiado",
+    "stepOf": "Passo {{current}} de {{total}}",
+    "close": "Fechar tour",
+    "skip": "Pular tour",
+    "back": "Voltar",
+    "next": "Próximo",
+    "finish": "Concluir",
+    "open": "Ver tour guiado",
+    "steps": {
+      "language": {
+        "title": "Escolha seu idioma",
+        "desc": "O site e este tour existem em português e inglês. Dá pra trocar a qualquer momento neste botão do topo.",
+        "pt": "Português",
+        "en": "English"
+      },
+      "welcome": {
+        "title": "Bem-vindo à EcoSense 🌿",
+        "desc": "Este é o Painel — o resumo ao vivo do conforto ambiental (ICAU-D) das cidades monitoradas. Vamos fazer um tour rápido, clique nos destaques ou use ”Próximo”."
+      },
+      "map": {
+        "title": "Mapa ao vivo",
+        "desc": "Cada ponto é um sensor real. Clique num ponto do mapa pra ver os detalhes — cor e tamanho indicam a nota ICAU-D daquele sensor."
+      },
+      "periods": {
+        "title": "Ao vivo, 7 dias ou 30 dias",
+        "desc": "Alterne entre os dados do momento e o histórico acumulado — experimente clicar em ”Últimos 7 Dias”."
+      },
+      "alerts": {
+        "title": "Alertas",
+        "desc": "Quando existe um pico de poluição ou um sensor com problema, ele aparece aqui. Clique pra expandir os detalhes."
+      },
+      "ranking": {
+        "title": "Ranking das cidades",
+        "desc": "As 10 cidades com melhor ICAU-D agora. Clique no nome de qualquer cidade pra abrir a página dela, com histórico e tendência."
+      },
+      "howItWorks": {
+        "title": "Quer entender a fórmula?",
+        "desc": "Em ”Como Funciona” explicamos o cálculo do ICAU-D, as fontes de dados e a arquitetura da plataforma em detalhe."
+      },
+      "a11y": {
+        "title": "Acessibilidade",
+        "desc": "Alto contraste, tamanho de fonte, reduzir animações e um narrador que lê a página em voz alta — tudo aqui."
+      }
+    }
   },
   "footer": {
     "tagline": "EcoSense Plataforma IoT — Dados ambientais de Sensor.Community & Open-Meteo",

@@ -14,6 +14,14 @@
   }
 }
 
+/* O Leaflet usa z-index internos altos (200-700) nos painéis do mapa
+   (tiles, marcadores, popups). Sem um contexto de empilhamento próprio no
+   container, esses valores vazam e cobrem dropdowns/menus do resto da
+   página (ex: o painel de acessibilidade) mesmo eles tendo z-index maior. */
+.leaflet-container {
+  isolation: isolate;
+}
+
 /* Leaflet popup styling */
 .leaflet-popup-content-wrapper {
   border-radius: 12px !important;
@@ -35,4 +43,64 @@
   transition-property: color, background-color, border-color, opacity;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
+}
+
+/* ============================================================================
+   Preferências de acessibilidade (painel no header — ver AccessibilityMenu.jsx)
+   Aplicadas via atributos em <html>, persistidas em localStorage.
+   ========================================================================== */
+
+/* Tamanho da fonte — escala em rem, então acompanha a maioria das classes
+   text-* do Tailwind automaticamente */
+html[data-font-size='large']  { font-size: 112.5%; }
+html[data-font-size='xlarge'] { font-size: 125%; }
+
+/* Alto contraste — reforça os tons de cinza mais claros (texto secundário,
+   bordas) que normalmente ficam abaixo da razão de contraste recomendada
+   pela WCAG para texto pequeno */
+html[data-contrast='high'] {
+  --tw-text-opacity: 1;
+}
+html[data-contrast='high'] body {
+  background-color: #ffffff;
+}
+html[data-contrast='high'] .text-gray-300,
+html[data-contrast='high'] .text-gray-400,
+html[data-contrast='high'] .text-gray-500 {
+  color: #1f2937 !important;
+}
+html[data-contrast='high'] .text-gray-600 {
+  color: #111827 !important;
+}
+html[data-contrast='high'] .border-gray-50,
+html[data-contrast='high'] .border-gray-100,
+html[data-contrast='high'] .border-gray-200 {
+  border-color: #4b5563 !important;
+}
+html[data-contrast='high'] .bg-gray-50 {
+  background-color: #e5e7eb !important;
+}
+html[data-contrast='high'] a,
+html[data-contrast='high'] button {
+  text-decoration-thickness: 2px;
+}
+
+/* Reduzir animações — respeita a preferência do SO automaticamente, e
+   também o toggle manual no painel (data-motion="reduce") pra quem não
+   configurou isso no sistema mas quer a opção aqui mesmo. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+html[data-motion='reduce'] *,
+html[data-motion='reduce'] *::before,
+html[data-motion='reduce'] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
 }

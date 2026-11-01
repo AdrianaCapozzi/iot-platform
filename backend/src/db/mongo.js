@@ -20,6 +20,7 @@ try {
 let SensorReading = null;
 let CacheEntry = null;
 let GeocodeEntry = null;
+let CityHourlyStat = null;
 
 if (isAvailable && mongoose) {
   const Schema = mongoose.Schema;
@@ -29,7 +30,7 @@ if (isAvailable && mongoose) {
   const sensorReadingSchema = new Schema(
     {
       sensorId: { type: String, required: true, index: true },
-      source: { type: String, enum: ['sensor_community', 'open_meteo'], required: true },
+      source: { type: String, enum: ['sensor_community', 'open_meteo', 'open_meteo_aq'], required: true },
       name: String,
       location: {
         lat: { type: Number, required: true },
@@ -52,8 +53,23 @@ if (isAvailable && mongoose) {
       sensorCount: Number,
       exposure: { type: String, enum: ['indoor', 'outdoor', null] },
       recordedAt: { type: Date, default: Date.now },
+      // Hora cheia de recordedAt (minutos/segundos zerados) — usada como chave de
+      // idempotência: um sensor só pode ter 1 leitura por hora, mesmo que o job de
+      // coleta rode mais de uma vez no período.
+      readingHour: { type: Date, required: true },
     },
     { timestamps: true }
+  );
+
+  // Idempotência: no máximo 1 leitura por sensor por hora.
+  // partialFilterExpression (não sparse) porque documentos já existentes (gravados
+  // antes desta mudança) têm sensorId mas não readingHour — um índice sparse comum
+  // ainda os inclui nesse caso (só ignora quando TODOS os campos estão ausentes),
+  // causando erro de duplicidade no build. O partial index exclui corretamente
+  // qualquer doc sem readingHour.
+  sensorReadingSchema.index(
+    { sensorId: 1, readingHour: 1 },
+    { unique: true, partialFilterExpression: { readingHour: { $exists: true } } }
   );
 
   // TTL index — auto-delete readings older than 30 days
@@ -81,10 +97,43 @@ if (isAvailable && mongoose) {
     { timestamps: true }
   );
 
+  // Resumo horário por cidade — Fase 2 do plano de dados: em vez de recalcular
+  // médias sobre sensorreadings bruto a cada request, guardamos 1 doc por
+  // cidade por hora já pronto (ICAU-D + medições agregadas). É a base do
+  // histórico "de verdade" nos gráficos.
+  const cityHourlyStatSchema = new Schema(
+    {
+      city: { type: String, required: true },
+      country: String,
+      hour: { type: Date, required: true }, // hora cheia, mesma convenção de readingHour
+      location: {
+        lat: Number,
+        lon: Number,
+      },
+      measurements: {
+        temperature: Number,
+        humidity: Number,
+        pm25: Number,
+        pm10: Number,
+        windSpeed: Number,
+      },
+      icaud: {
+        score: Number,
+        classification: String,
+      },
+      sensorCount: Number,
+    },
+    { timestamps: true }
+  );
+
+  cityHourlyStatSchema.index({ city: 1, hour: 1 }, { unique: true });
+  cityHourlyStatSchema.index({ hour: 1 }, { expireAfterSeconds: 400 * 24 * 60 * 60 }); // 400 dias
+
   // Criar models
-  SensorReading = model('SensorReading', sensorReadingSchema);
-  CacheEntry = model('CacheEntry', cacheEntrySchema);
-  GeocodeEntry = model('GeocodeEntry', geocodeEntrySchema);
+  SensorReading   = model('SensorReading', sensorReadingSchema);
+  CacheEntry      = model('CacheEntry', cacheEntrySchema);
+  GeocodeEntry    = model('GeocodeEntry', geocodeEntrySchema);
+  CityHourlyStat  = model('CityHourlyStat', cityHourlyStatSchema);
 }
 
 /**
@@ -124,25 +173,53 @@ export async function disconnectMongo() {
 }
 
 /**
+ * Trunca uma data para a hora cheia (zera minutos/segundos/ms).
+ * Usado como chave de idempotência das leituras.
+ */
+function toReadingHour(date) {
+  const d = new Date(date);
+  d.setMinutes(0, 0, 0);
+  return d;
+}
+
+/**
+ * sensor.icaud.classification vem como objeto completo ({min, max, label, color,
+ * emoji}) de models/icaud.js, mas o schema histórico guarda só o rótulo (String).
+ * Sem isso, o Mongoose falha o cast silenciosamente e a leitura inteira não é salva.
+ */
+function toStoredIcaud(icaud) {
+  if (!icaud) return { score: null, classification: null };
+  return {
+    score: icaud.score ?? null,
+    classification: icaud.classification?.label ?? null,
+  };
+}
+
+/**
  * Save a sensor reading snapshot
  */
 export async function saveSensorReading(sensor) {
   if (!isAvailable || !SensorReading) return;
 
   try {
-    const reading = new SensorReading({
-      sensorId: sensor.id,
-      source: sensor.source,
-      name: sensor.name,
-      location: sensor.location,
-      measurements: sensor.measurements,
-      icaud: sensor.icaud,
-      deviceType: sensor.deviceType,
-      sensorCount: sensor.sensorCount,
-      exposure: sensor.exposure,
-      recordedAt: new Date(sensor.lastSeen || Date.now()),
-    });
-    await reading.save();
+    const recordedAt = new Date(sensor.lastSeen || Date.now());
+    await SensorReading.updateOne(
+      { sensorId: sensor.id, readingHour: toReadingHour(recordedAt) },
+      {
+        $set: {
+          source: sensor.source,
+          name: sensor.name,
+          location: sensor.location,
+          measurements: sensor.measurements,
+          icaud: toStoredIcaud(sensor.icaud),
+          deviceType: sensor.deviceType,
+          sensorCount: sensor.sensorCount,
+          exposure: sensor.exposure,
+          recordedAt,
+        },
+      },
+      { upsert: true }
+    );
   } catch (err) {
     logger.debug('SensorReading save error:', err.message);
   }
@@ -155,21 +232,87 @@ export async function saveSensorReadingsBatch(sensors) {
   if (!isAvailable || !SensorReading || sensors.length === 0) return;
 
   try {
-    const readings = sensors.map(sensor => ({
-      sensorId: sensor.id,
-      source: sensor.source,
-      name: sensor.name,
-      location: sensor.location,
-      measurements: sensor.measurements,
-      icaud: sensor.icaud,
-      deviceType: sensor.deviceType,
-      sensorCount: sensor.sensorCount,
-      exposure: sensor.exposure,
-      recordedAt: new Date(sensor.lastSeen || Date.now()),
-    }));
-    await SensorReading.insertMany(readings, { ordered: false });
+    const ops = sensors.map(sensor => {
+      const recordedAt = new Date(sensor.lastSeen || Date.now());
+      return {
+        updateOne: {
+          filter: { sensorId: sensor.id, readingHour: toReadingHour(recordedAt) },
+          update: {
+            $set: {
+              source: sensor.source,
+              name: sensor.name,
+              location: sensor.location,
+              measurements: sensor.measurements,
+              icaud: toStoredIcaud(sensor.icaud),
+              deviceType: sensor.deviceType,
+              sensorCount: sensor.sensorCount,
+              exposure: sensor.exposure,
+              recordedAt,
+            },
+          },
+          upsert: true,
+        },
+      };
+    });
+    await SensorReading.bulkWrite(ops, { ordered: false });
   } catch (err) {
     logger.debug('SensorReading batch save error:', err.message);
+  }
+}
+
+/**
+ * Salva o resumo horário de cada cidade (1 doc por cidade por hora, upsert).
+ * Chamado logo após fetchAllCities() em refreshData(), reaproveitando os
+ * objetos de cidade já computados — não faz nenhuma query extra de sensores.
+ */
+export async function saveCityHourlyStats(cities) {
+  if (!isAvailable || !CityHourlyStat || !cities || cities.length === 0) return;
+
+  try {
+    const hour = toReadingHour(new Date());
+    const ops = cities
+      .filter(c => c.name && c.location)
+      .map(city => ({
+        updateOne: {
+          filter: { city: city.name, hour },
+          update: {
+            $set: {
+              country: city.country,
+              location: { lat: city.location.lat, lon: city.location.lon },
+              measurements: city.measurements,
+              icaud: {
+                score: city.icaud?.score ?? null,
+                classification: city.icaud?.classification?.label ?? null,
+              },
+              sensorCount: city.sensorCount,
+            },
+          },
+          upsert: true,
+        },
+      }));
+    if (ops.length === 0) return;
+    await CityHourlyStat.bulkWrite(ops, { ordered: false });
+  } catch (err) {
+    logger.debug('CityHourlyStat batch save error:', err.message);
+  }
+}
+
+/**
+ * Histórico de resumos horários de uma cidade nos últimos N dias — já vem
+ * pronto do banco, sem recalcular nada sobre os dados brutos.
+ */
+export async function getCityHourlyHistory(cityName, daysBack = 7) {
+  if (!isAvailable || !CityHourlyStat) return [];
+
+  try {
+    const since = new Date(Date.now() - daysBack * 24 * 60 * 60 * 1000);
+    return await CityHourlyStat.find({
+      city: cityName,
+      hour: { $gte: since },
+    }).sort({ hour: 1 }).lean();
+  } catch (err) {
+    logger.debug('getCityHourlyHistory error:', err.message);
+    return [];
   }
 }
 
@@ -301,6 +444,60 @@ export async function cleanupOldReadings(daysBack = 30) {
     logger.info(`Cleaned up ${result.deletedCount} old sensor readings`);
   } catch (err) {
     logger.error('cleanupOldReadings error:', err.message);
+  }
+}
+
+/**
+ * Detecta sensores "travados": mesmo valor de PM2.5 e temperatura em todas as
+ * leituras de uma janela de tempo, com leituras suficientes pra não ser
+ * coincidência (Fase 3 — controle de qualidade dos dados).
+ */
+export async function getStuckSensors(hoursBack = 6, minReadings = 3) {
+  if (!isAvailable || !SensorReading) return [];
+
+  try {
+    const since = new Date(Date.now() - hoursBack * 60 * 60 * 1000);
+    const groups = await SensorReading.aggregate([
+      // Só sensores físicos reais — fontes baseadas em modelo (open_meteo,
+      // open_meteo_aq) legitimamente repetem valor entre leituras próximas,
+      // o que geraria falso-positivo de "travado".
+      { $match: { recordedAt: { $gte: since }, source: 'sensor_community' } },
+      { $sort: { recordedAt: -1 } },
+      {
+        $group: {
+          _id: '$sensorId',
+          name: { $first: '$name' },
+          city: { $first: '$location.city' },
+          country: { $first: '$location.country' },
+          readingCount: { $sum: 1 },
+          distinctPm25: { $addToSet: '$measurements.pm25' },
+          distinctTemp: { $addToSet: '$measurements.temperature' },
+          lastSeen: { $max: '$recordedAt' },
+        },
+      },
+      { $match: { readingCount: { $gte: minReadings } } },
+    ]);
+
+    return groups
+      .filter(g => {
+        // "travado" = 1 único valor não-nulo repetido em todas as leituras,
+        // pra pelo menos uma das duas métricas
+        const pm25Stuck = g.distinctPm25.filter(v => v !== null).length === 1 && g.distinctPm25.length <= 1;
+        const tempStuck = g.distinctTemp.filter(v => v !== null).length === 1 && g.distinctTemp.length <= 1;
+        return pm25Stuck || tempStuck;
+      })
+      .map(g => ({
+        sensorId: g._id,
+        name: g.name,
+        city: g.city,
+        country: g.country,
+        readingCount: g.readingCount,
+        hoursChecked: hoursBack,
+        lastSeen: g.lastSeen,
+      }));
+  } catch (err) {
+    logger.debug('getStuckSensors error:', err.message);
+    return [];
   }
 }
 

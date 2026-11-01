@@ -5,7 +5,58 @@
     "map": "Map",
     "sensors": "Sensors",
     "howItWorks": "How It Works",
-    "platform": "IoT Platform"
+    "platform": "IoT Platform",
+    "skipToContent": "Skip to content",
+    "mainNavigation": "Main navigation",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "switchLanguage": "Switch to Portuguese"
+  },
+  "tour": {
+    "dialogLabel": "Guided tour",
+    "stepOf": "Step {{current}} of {{total}}",
+    "close": "Close tour",
+    "skip": "Skip tour",
+    "back": "Back",
+    "next": "Next",
+    "finish": "Finish",
+    "open": "Show guided tour",
+    "steps": {
+      "language": {
+        "title": "Choose your language",
+        "desc": "The site and this tour are available in Portuguese and English. You can switch at any time using this button at the top.",
+        "pt": "Português",
+        "en": "English"
+      },
+      "welcome": {
+        "title": "Welcome to EcoSense 🌿",
+        "desc": "This is the Dashboard — the live summary of environmental comfort (ICAU-D) across the monitored cities. Let's take a quick tour: click the highlights or use ”Next”."
+      },
+      "map": {
+        "title": "Live map",
+        "desc": "Each dot is a real sensor. Click a dot on the map to see its details — color and size reflect that sensor's ICAU-D score."
+      },
+      "periods": {
+        "title": "Live, 7 days or 30 days",
+        "desc": "Switch between current data and accumulated history — try clicking ”Last 7 Days”."
+      },
+      "alerts": {
+        "title": "Alerts",
+        "desc": "When there is a pollution spike or a faulty sensor, it shows up here. Click to expand the details."
+      },
+      "ranking": {
+        "title": "City ranking",
+        "desc": "The 10 cities with the best ICAU-D right now. Click any city name to open its page, with history and trend."
+      },
+      "howItWorks": {
+        "title": "Want to understand the formula?",
+        "desc": "In ”How It Works” we explain the ICAU-D calculation, the data sources and the platform architecture in detail."
+      },
+      "a11y": {
+        "title": "Accessibility",
+        "desc": "High contrast, font size, reduced motion and a narrator that reads the page aloud — all here."
+      }
+    }
   },
   "footer": {
     "tagline": "EcoSense IoT Platform — Environmental data from Sensor.Community & Open-Meteo",

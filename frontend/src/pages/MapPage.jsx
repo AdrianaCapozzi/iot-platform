@@ -82,6 +82,7 @@ export default function MapPage() {
         <select
           value={filters.source}
           onChange={e => setFilters({ source: e.target.value })}
+          aria-label={t('map.allSources', 'Fonte de dados')}
           className="text-sm border border-gray-200 rounded-lg px-3 py-2 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-green-500"
         >
           {SOURCE_OPTIONS.map(o => (
@@ -92,6 +93,7 @@ export default function MapPage() {
         <select
           value={filters.continent}
           onChange={e => setFilters({ continent: e.target.value, country: '' })}
+          aria-label={t('ranking.allContinents', 'Continente')}
           className="text-sm border border-gray-200 rounded-lg px-3 py-2 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-green-500"
         >
           <option value="">{t('ranking.allContinents')}</option>
@@ -103,6 +105,7 @@ export default function MapPage() {
         <select
           value={filters.country}
           onChange={e => setFilters({ country: e.target.value })}
+          aria-label={t('ranking.allCountries', 'País')}
           className="text-sm border border-gray-200 rounded-lg px-3 py-2 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-green-500"
         >
           <option value="">{t('ranking.allCountries')}</option>
@@ -114,6 +117,7 @@ export default function MapPage() {
         <select
           value={filters.class}
           onChange={e => setFilters({ class: e.target.value })}
+          aria-label={t('ranking.allClassifications', 'Classificação')}
           className="text-sm border border-gray-200 rounded-lg px-3 py-2 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-green-500"
         >
           <option value="">{t('ranking.allClassifications')}</option>
@@ -125,10 +129,11 @@ export default function MapPage() {
         {hasActive && (
           <button
             onClick={clearFilters}
-            className="text-sm text-gray-500 hover:text-gray-700 px-2 py-2"
+            className="text-sm text-gray-500 hover:text-gray-700 px-2 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-1 rounded"
             title="Limpar filtros"
+            aria-label="Limpar filtros"
           >
-            ✕ Limpar
+            <span aria-hidden="true">✕</span> Limpar
           </button>
         )}
       </div>
@@ -142,7 +147,7 @@ export default function MapPage() {
               <Spinner size="lg" />
             </div>
           ) : filtered.length === 0 && hasActive ? (
-            <div className="flex items-center justify-center h-[600px] bg-gray-50 rounded-xl border border-gray-200 text-gray-400">
+            <div role="status" className="flex items-center justify-center h-[600px] bg-gray-50 rounded-xl border border-gray-200 text-gray-500">
               Nenhum sensor corresponde ao filtro
             </div>
           ) : (

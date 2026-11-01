@@ -349,7 +349,7 @@ export default function SensorExplainer() {
               API meteorológica gratuita e open source com dados globais de alta resolução.
             </p>
             <a href="https://open-meteo.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline text-sm font-medium">
-              open-meteo.com →
+              open-meteo.com →<span className="sr-only"> (abre em nova aba)</span>
             </a>
           </div>
           <div>
@@ -358,7 +358,7 @@ export default function SensorExplainer() {
               Comunidade global de voluntários monitorando qualidade do ar com sensores de baixo custo.
             </p>
             <a href="https://sensor.community" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline text-sm font-medium">
-              sensor.community →
+              sensor.community →<span className="sr-only"> (abre em nova aba)</span>
             </a>
           </div>
           <div>
@@ -368,10 +368,10 @@ export default function SensorExplainer() {
             </p>
             <div className="space-y-1">
               <a href="https://github.com/opendata-stuttgart/meta/wiki/APIs" target="_blank" rel="noopener noreferrer" className="block text-blue-600 hover:underline text-sm font-medium">
-                Sensor.Community API →
+                Sensor.Community API →<span className="sr-only"> (abre em nova aba)</span>
               </a>
               <a href="https://open-meteo.com/en/docs" target="_blank" rel="noopener noreferrer" className="block text-blue-600 hover:underline text-sm font-medium">
-                Open-Meteo API →
+                Open-Meteo API →<span className="sr-only"> (abre em nova aba)</span>
               </a>
             </div>
           </div>
@@ -381,7 +381,7 @@ export default function SensorExplainer() {
               Como montar seu próprio sensor e contribuir para monitoramento ambiental.
             </p>
             <a href="https://sensor.community/en/sensors/airrohr/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline text-sm font-medium">
-              Guia de montagem Sensor.Community →
+              Guia de montagem Sensor.Community →<span className="sr-only"> (abre em nova aba)</span>
             </a>
           </div>
         </div>
@@ -394,8 +394,8 @@ export default function SensorExplainer() {
           {t('sensors.ctaText')}
         </p>
         <div className="flex gap-3 justify-center flex-wrap">
-          <a href="https://sensor.community/en/" target="_blank" rel="noopener noreferrer" className="px-6 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700">
-            {t('sensors.ctaButton')}
+          <a href="https://sensor.community/en/" target="_blank" rel="noopener noreferrer" className="px-6 py-2 bg-green-700 text-white rounded-lg font-medium hover:bg-green-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-1">
+            {t('sensors.ctaButton')}<span className="sr-only"> (abre em nova aba)</span>
           </a>
         </div>
       </div>

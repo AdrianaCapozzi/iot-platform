@@ -165,7 +165,7 @@ export default function SensorMap({ sensors = [], center = [-14.2350, -51.9253],
                         {score.toFixed(1)} — {t(`classifications.${cls?.label}`, cls?.label)}
                       </span>
                     ) : (
-                      <span className="text-gray-400 text-xs">{t('table.na')}</span>
+                      <span className="text-gray-500 text-xs">{t('table.na')}</span>
                     )}
                   </div>
 
@@ -179,7 +179,7 @@ export default function SensorMap({ sensors = [], center = [-14.2350, -51.9253],
                     )}
                   </div>
 
-                  <div className="mt-2 text-xs text-gray-400" title={formatFullDateTimeBRT(sensor.lastSeen) + ' (BRT)'}>
+                  <div className="mt-2 text-xs text-gray-500" title={formatFullDateTimeBRT(sensor.lastSeen) + ' (BRT)'}>
                     🕐 {formatRelativeTimeBRT(sensor.lastSeen)} — {formatFullDateTimeBRT(sensor.lastSeen)}
                   </div>
                 </div>

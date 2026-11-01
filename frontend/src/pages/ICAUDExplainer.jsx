@@ -96,13 +96,15 @@ export default function ICAUDExplainer() {
   const TabButton = ({ id, label, icon }) => (
     <button
       onClick={() => setActiveTab(id)}
-      className={`flex items-center gap-2 px-4 py-3 rounded-lg font-medium transition-all ${
+      role="tab"
+      aria-selected={activeTab === id}
+      className={`flex items-center gap-2 px-4 py-3 rounded-lg font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-1 ${
         activeTab === id
-          ? 'bg-green-600 text-white shadow-md'
+          ? 'bg-green-700 text-white shadow-md'
           : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
       }`}
     >
-      <span>{icon}</span>
+      <span aria-hidden="true">{icon}</span>
       {label}
     </button>
   );
@@ -122,10 +124,11 @@ export default function ICAUDExplainer() {
       </div>
 
       {/* Tabs */}
-      <div className="flex flex-wrap gap-3 border-b border-gray-200 pb-4">
+      <div role="tablist" aria-label={t('explainer.title')} className="flex flex-wrap gap-3 border-b border-gray-200 pb-4">
         <TabButton id="arquitetura" label={t('explainer.tabArchitecture')} icon="🏗️" />
         <TabButton id="icaud" label={t('explainer.tabIcaud')} icon="📊" />
         <TabButton id="fontes" label={t('explainer.tabSources')} icon="🌍" />
+        <TabButton id="v2" label="O que muda na v2.0" icon="🚀" />
       </div>
 
       {/* ============ TAB: ARQUITETURA ============ */}
@@ -596,7 +599,7 @@ export default function ICAUDExplainer() {
               </div>
               <div className="mt-3 pt-3 border-t border-gray-200">
                 <a href="https://sensor.community" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 text-sm font-medium">
-                  📍 sensor.community →
+                  <span aria-hidden="true">📍</span> sensor.community →<span className="sr-only"> (abre em nova aba)</span>
                 </a>
               </div>
             </div>
@@ -619,7 +622,7 @@ export default function ICAUDExplainer() {
               </div>
               <div className="mt-3 pt-3 border-t border-gray-200">
                 <a href="https://open-meteo.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 text-sm font-medium">
-                  📍 open-meteo.com →
+                  <span aria-hidden="true">📍</span> open-meteo.com →<span className="sr-only"> (abre em nova aba)</span>
                 </a>
               </div>
             </div>
@@ -635,6 +638,146 @@ export default function ICAUDExplainer() {
                 </li>
               ))}
             </ul>
+          </div>
+        </div>
+      </div>
+      )}
+
+      {/* ============ TAB: O QUE MUDA NA V2.0 ============ */}
+      {activeTab === 'v2' && (
+      <div>
+        <div className="flex items-center gap-3 mb-8">
+          <div className="w-1 h-10 bg-teal-500 rounded"></div>
+          <h2 className="text-3xl font-bold text-gray-900">O que muda na v2.0</h2>
+        </div>
+
+        <div className="space-y-8">
+          {/* Intro */}
+          <div className="bg-gradient-to-br from-teal-50 to-emerald-50 rounded-xl border border-teal-100 p-6">
+            <p className="text-gray-700">
+              A v2.0 já está em boa parte no ar: histórico confiável, tendências, alertas
+              de qualidade e um painel de acessibilidade de verdade. Falta só a base
+              técnica de monetização (API paga + publicidade) prevista no plano de
+              negócios.
+            </p>
+          </div>
+
+          {/* Tour guiado */}
+          <div className="bg-white border border-gray-200 rounded-xl p-6 flex items-start gap-4">
+            <span className="text-3xl" aria-hidden="true">❔</span>
+            <div>
+              <h3 className="font-semibold text-gray-900 mb-1">Novo: tour guiado de primeira visita</h3>
+              <p className="text-sm text-gray-600">
+                Quem entra pela primeira vez recebe um passo a passo com destaque
+                escurecendo o resto da tela — nav principal, mapa ao vivo, filtros,
+                alertas, ranking e o menu de acessibilidade. Pode ser revisto a qualquer
+                momento clicando no <strong>❔</strong> no canto do cabeçalho.
+              </p>
+            </div>
+          </div>
+
+          {/* Limitações x Objetivos */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-orange-50 border border-orange-200 rounded-xl p-6">
+              <h3 className="font-bold text-orange-700 mb-3 flex items-center gap-2">
+                <span>⚠️</span> Limitações — antes da v2.0
+              </h3>
+              <ul className="space-y-2 text-sm text-gray-700">
+                <li className="flex items-start gap-2"><span className="text-green-500 mt-0.5">✅</span><span>Limitação quanto ao armazenamento do histórico <em className="text-green-700 not-italic font-medium">— resolvido (Fase 1)</em></span></li>
+                <li className="flex items-start gap-2"><span className="text-green-500 mt-0.5">✅</span><span>Inexistência de controle de qualidade dos dados <em className="text-green-700 not-italic font-medium">— resolvido (Fase 3)</em></span></li>
+                <li className="flex items-start gap-2"><span className="text-green-500 mt-0.5">✅</span><span>Falta de identificação de tendências <em className="text-green-700 not-italic font-medium">— resolvido (Fase 3)</em></span></li>
+                <li className="flex items-start gap-2"><span className="text-green-500 mt-0.5">✅</span><span>Ausência de geração de alertas <em className="text-green-700 not-italic font-medium">— resolvido (Fase 3)</em></span></li>
+                <li className="flex items-start gap-2"><span className="text-green-500 mt-0.5">✅</span><span>Não apresenta recursos de acessibilidade <em className="text-green-700 not-italic font-medium">— resolvido (Fase 3)</em></span></li>
+              </ul>
+            </div>
+            <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
+              <h3 className="font-bold text-blue-700 mb-3 flex items-center gap-2">
+                <span>🎯</span> Objetivos da v2.0
+              </h3>
+              <ul className="space-y-2 text-sm text-gray-700">
+                <li className="flex items-start gap-2"><span className="text-green-500 mt-0.5">✅</span>Melhorar como os dados são armazenados, processados e apresentados</li>
+                <li className="flex items-start gap-2"><span className="text-green-500 mt-0.5">✅</span>Armazenar e analisar histórico de dados ambientais</li>
+                <li className="flex items-start gap-2"><span className="text-green-500 mt-0.5">✅</span>Gerar resumos, identificando tendências</li>
+                <li className="flex items-start gap-2"><span className="text-green-500 mt-0.5">✅</span>Emitir alertas sobre alterações relevantes</li>
+                <li className="flex items-start gap-2"><span className="text-green-500 mt-0.5">✅</span>Apresentar informações de forma acessível a todos</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Fases */}
+          <div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-4">Roteiro em 4 fases</h3>
+            <div className="space-y-3">
+              {[
+                {
+                  num: 1,
+                  badge: 'flex-shrink-0 w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center text-lg font-bold text-teal-600',
+                  tag: 'base de tudo',
+                  status: 'done',
+                  title: 'Arrumar a coleta',
+                  desc: 'Feito: todas as fontes (Sensor.Community, Open-Meteo, Open-Meteo Air Quality) agora salvam histórico de verdade, sem duplicar, com correção de um bug que descartava leituras silenciosamente.',
+                },
+                {
+                  num: 2,
+                  badge: 'flex-shrink-0 w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center text-lg font-bold text-emerald-600',
+                  tag: 'destrava os gráficos',
+                  status: 'done',
+                  title: 'Montar os resumos',
+                  desc: 'Feito: resumo horário por cidade pronto no banco (ICAU-D + medições) e gráfico de histórico na página de cada cidade, com toggle 7 dias / 30 dias.',
+                },
+                {
+                  num: 3,
+                  badge: 'flex-shrink-0 w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center text-lg font-bold text-purple-600',
+                  tag: 'valor pro usuário',
+                  status: 'done',
+                  title: 'Análise: tendências, qualidade, alertas e acessibilidade',
+                  desc: 'Feito: badge de tendência (melhorando/estável/piorando) na página da cidade, detecção de sensor travado, painel de alertas de pico de poluição no Dashboard. Em acessibilidade: menu no cabeçalho com alto contraste, 3 tamanhos de fonte, reduzir animações e um narrador que lê a página em voz alta — além de contraste de cor corrigido (WCAG AA), skip-link, foco por teclado visível e ARIA em Painel, Ranking, Mapa, Sensores e Como Funciona. E um tour guiado (❔ no cabeçalho) que apresenta a plataforma na primeira visita.',
+                },
+                {
+                  num: 4,
+                  badge: 'flex-shrink-0 w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center text-lg font-bold text-amber-600',
+                  tag: 'monetização',
+                  status: 'planned',
+                  title: 'API pública paga e publicidade',
+                  desc: 'Chave de acesso por cliente, controle de cota/limite de uso e registro de consultas — a base técnica para cobrar por uso da API e sustentar o plano gratuito com publicidade no painel público.',
+                },
+              ].map(phase => (
+                <div key={phase.num} className="flex gap-4 items-start">
+                  <div className={phase.badge}>
+                    {phase.num}
+                  </div>
+                  <div className="flex-1 bg-white border border-gray-100 rounded-lg p-4">
+                    <h4 className="font-semibold text-gray-900 flex items-center gap-2 flex-wrap">
+                      {phase.title}
+                      <span className="text-[10px] uppercase tracking-wide font-bold text-teal-700 bg-teal-100 px-2 py-0.5 rounded-full">
+                        {phase.tag}
+                      </span>
+                      {phase.status === 'done' ? (
+                        <span className="text-[10px] uppercase tracking-wide font-bold text-green-700 bg-green-100 px-2 py-0.5 rounded-full">
+                          ✅ concluído
+                        </span>
+                      ) : (
+                        <span className="text-[10px] uppercase tracking-wide font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
+                          🔜 planejado
+                        </span>
+                      )}
+                    </h4>
+                    <p className="text-sm text-gray-600 mt-1">{phase.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Status atual */}
+          <div className="bg-amber-50 border-l-4 border-amber-400 border border-amber-200 rounded-xl p-6">
+            <h3 className="font-semibold text-amber-800 mb-2">O que falta</h3>
+            <p className="text-sm text-gray-700">
+              Fases 1, 2 e 3 estão no ar e testadas contra o banco real. Só falta a
+              <strong> Fase 4</strong>: a chave de API por cliente, controle de cota e
+              registro de consultas que viabilizam a API paga e a publicidade previstas
+              no plano de negócios.
+            </p>
           </div>
         </div>
       </div>

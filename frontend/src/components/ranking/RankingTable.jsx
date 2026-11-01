@@ -141,7 +141,7 @@ export default function RankingTable({ cities = [], showDetails = false }) {
                   >
                     {city.name}
                   </Link>
-                  <div className="text-xs text-gray-400 mt-0.5">
+                  <div className="text-xs text-gray-500 mt-0.5">
                     {t(`countries.${city.country}`, city.country || 'Unknown')}
                   </div>
                 </td>

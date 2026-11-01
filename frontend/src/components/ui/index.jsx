@@ -41,7 +41,7 @@ export function ScoreRing({ score, size = 120 }) {
         <div className="text-2xl font-bold font-mono" style={{ color: cls?.color || '#9ca3af' }}>
           {score !== null ? Math.round(score) : '—'}
         </div>
-        <div className="text-xs text-gray-400">ICAU-D</div>
+        <div className="text-xs text-gray-500">ICAU-D</div>
       </div>
     </div>
   );
@@ -76,7 +76,7 @@ export function StatCard({ label, value, unit, icon, color = '#6b7280', source =
         <span className="text-xs text-gray-500 uppercase tracking-wider font-medium flex-1">{label}</span>
         {tooltip && (
           <span
-            className="text-[10px] text-gray-400 cursor-help select-none"
+            className="text-[10px] text-gray-500 cursor-help select-none"
             aria-label={tooltip}
           >
             ⓘ
@@ -86,7 +86,7 @@ export function StatCard({ label, value, unit, icon, color = '#6b7280', source =
       <div className="text-2xl font-bold font-mono" style={{ color }}>
         {hasValue ? value : '—'}
         {hasValue && unit && (
-          <span className="text-sm font-normal text-gray-400 ml-1">{unit}</span>
+          <span className="text-sm font-normal text-gray-500 ml-1">{unit}</span>
         )}
       </div>
     </div>
@@ -127,7 +127,7 @@ export function ClassificationBadge({ label, color }) {
 /** Empty state */
 export function EmptyState({ message, icon = '📡' }) {
   return (
-    <div className="text-center py-12 text-gray-400">
+    <div className="text-center py-12 text-gray-500">
       <div className="text-4xl mb-3">{icon}</div>
       <p className="text-sm">{message}</p>
     </div>
