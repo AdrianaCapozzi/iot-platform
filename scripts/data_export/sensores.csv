@@ -1,0 +1,521 @@
+﻿city_id,sensor_id,name,source,device_type,last_seen,provides
+são_paulo,openmeteo_são_paulo,São Paulo - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+são_paulo,openmeteo_aq_são_paulo,São Paulo - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+rio_de_janeiro,openmeteo_rio_de_janeiro,Rio de Janeiro - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+rio_de_janeiro,openmeteo_aq_rio_de_janeiro,Rio de Janeiro - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+belo_horizonte,openmeteo_belo_horizonte,Belo Horizonte - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+belo_horizonte,openmeteo_aq_belo_horizonte,Belo Horizonte - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+brasília,openmeteo_brasília,Brasília - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+brasília,openmeteo_aq_brasília,Brasília - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+salvador,openmeteo_salvador,Salvador - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+salvador,openmeteo_aq_salvador,Salvador - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+fortaleza,openmeteo_fortaleza,Fortaleza - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+fortaleza,openmeteo_aq_fortaleza,Fortaleza - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+recife,openmeteo_recife,Recife - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+recife,openmeteo_aq_recife,Recife - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+manaus,openmeteo_manaus,Manaus - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+manaus,openmeteo_aq_manaus,Manaus - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+curitiba,openmeteo_curitiba,Curitiba - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+curitiba,openmeteo_aq_curitiba,Curitiba - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+porto_alegre,openmeteo_porto_alegre,Porto Alegre - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+porto_alegre,openmeteo_aq_porto_alegre,Porto Alegre - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+goiânia,openmeteo_goiânia,Goiânia - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+goiânia,openmeteo_aq_goiânia,Goiânia - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+belém,openmeteo_belém,Belém - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+belém,openmeteo_aq_belém,Belém - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+vitória,openmeteo_vitória,Vitória - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+vitória,openmeteo_aq_vitória,Vitória - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+florianópolis,openmeteo_florianópolis,Florianópolis - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+florianópolis,openmeteo_aq_florianópolis,Florianópolis - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+cuiabá,openmeteo_cuiabá,Cuiabá - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+cuiabá,openmeteo_aq_cuiabá,Cuiabá - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+campo_grande,openmeteo_campo_grande,Campo Grande - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+campo_grande,openmeteo_aq_campo_grande,Campo Grande - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+maceió,openmeteo_maceió,Maceió - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+maceió,openmeteo_aq_maceió,Maceió - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+joão_pessoa,openmeteo_joão_pessoa,João Pessoa - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+joão_pessoa,openmeteo_aq_joão_pessoa,João Pessoa - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+natal,openmeteo_natal,Natal - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+natal,openmeteo_aq_natal,Natal - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+aracaju,openmeteo_aracaju,Aracaju - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+aracaju,openmeteo_aq_aracaju,Aracaju - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+teresina,openmeteo_teresina,Teresina - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+teresina,openmeteo_aq_teresina,Teresina - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+são_luís,openmeteo_são_luís,São Luís - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+são_luís,openmeteo_aq_são_luís,São Luís - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+palmas,openmeteo_palmas,Palmas - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+palmas,openmeteo_aq_palmas,Palmas - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+porto_velho,openmeteo_porto_velho,Porto Velho - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+porto_velho,openmeteo_aq_porto_velho,Porto Velho - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+boa_vista,openmeteo_boa_vista,Boa Vista - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+boa_vista,openmeteo_aq_boa_vista,Boa Vista - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+macapá,openmeteo_macapá,Macapá - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+macapá,openmeteo_aq_macapá,Macapá - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+rio_branco,openmeteo_rio_branco,Rio Branco - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+rio_branco,openmeteo_aq_rio_branco,Rio Branco - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+campinas,openmeteo_campinas,Campinas - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+campinas,openmeteo_aq_campinas,Campinas - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+guarulhos,openmeteo_guarulhos,Guarulhos - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+guarulhos,openmeteo_aq_guarulhos,Guarulhos - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+são_bernardo_do_campo,openmeteo_são_bernardo_do_campo,São Bernardo do Campo - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+são_bernardo_do_campo,openmeteo_aq_são_bernardo_do_campo,São Bernardo do Campo - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+santo_andré,openmeteo_santo_andré,Santo André - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+santo_andré,openmeteo_aq_santo_andré,Santo André - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+osasco,openmeteo_osasco,Osasco - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+osasco,openmeteo_aq_osasco,Osasco - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+ribeirão_preto,openmeteo_ribeirão_preto,Ribeirão Preto - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+ribeirão_preto,openmeteo_aq_ribeirão_preto,Ribeirão Preto - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+sorocaba,openmeteo_sorocaba,Sorocaba - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+sorocaba,openmeteo_aq_sorocaba,Sorocaba - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+santos,openmeteo_santos,Santos - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+santos,openmeteo_aq_santos,Santos - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+niterói,openmeteo_niterói,Niterói - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+niterói,openmeteo_aq_niterói,Niterói - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+duque_de_caxias,openmeteo_duque_de_caxias,Duque de Caxias - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+duque_de_caxias,openmeteo_aq_duque_de_caxias,Duque de Caxias - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+nova_iguaçu,openmeteo_nova_iguaçu,Nova Iguaçu - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+nova_iguaçu,openmeteo_aq_nova_iguaçu,Nova Iguaçu - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+são_gonçalo,openmeteo_são_gonçalo,São Gonçalo - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+são_gonçalo,openmeteo_aq_são_gonçalo,São Gonçalo - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+uberlândia,openmeteo_uberlândia,Uberlândia - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+uberlândia,openmeteo_aq_uberlândia,Uberlândia - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+juiz_de_fora,openmeteo_juiz_de_fora,Juiz de Fora - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+juiz_de_fora,openmeteo_aq_juiz_de_fora,Juiz de Fora - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+londrina,openmeteo_londrina,Londrina - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+londrina,openmeteo_aq_londrina,Londrina - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+maringá,openmeteo_maringá,Maringá - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+maringá,openmeteo_aq_maringá,Maringá - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+joinville,openmeteo_joinville,Joinville - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+joinville,openmeteo_aq_joinville,Joinville - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+caxias_do_sul,openmeteo_caxias_do_sul,Caxias do Sul - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+caxias_do_sul,openmeteo_aq_caxias_do_sul,Caxias do Sul - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+pelotas,openmeteo_pelotas,Pelotas - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+pelotas,openmeteo_aq_pelotas,Pelotas - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+feira_de_santana,openmeteo_feira_de_santana,Feira de Santana - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+feira_de_santana,openmeteo_aq_feira_de_santana,Feira de Santana - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+caruaru,openmeteo_caruaru,Caruaru - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+caruaru,openmeteo_aq_caruaru,Caruaru - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+berlin,openmeteo_berlin,Berlin - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+berlin,openmeteo_aq_berlin,Berlin - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+london,openmeteo_london,London - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+london,openmeteo_aq_london,London - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.508Z,pm25|pm10
+paris,openmeteo_paris,Paris - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+paris,openmeteo_aq_paris,Paris - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.509Z,pm25|pm10
+madrid,openmeteo_madrid,Madrid - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+madrid,openmeteo_aq_madrid,Madrid - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.509Z,pm25|pm10
+rome,openmeteo_rome,Rome - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+rome,openmeteo_aq_rome,Rome - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.509Z,pm25|pm10
+amsterdam,openmeteo_amsterdam,Amsterdam - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+amsterdam,openmeteo_aq_amsterdam,Amsterdam - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.509Z,pm25|pm10
+vienna,openmeteo_vienna,Vienna - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+vienna,openmeteo_aq_vienna,Vienna - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.509Z,pm25|pm10
+warsaw,openmeteo_warsaw,Warsaw - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+warsaw,openmeteo_aq_warsaw,Warsaw - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.509Z,pm25|pm10
+prague,openmeteo_prague,Prague - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+prague,openmeteo_aq_prague,Prague - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.509Z,pm25|pm10
+budapest,openmeteo_budapest,Budapest - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+budapest,openmeteo_aq_budapest,Budapest - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.509Z,pm25|pm10
+munich,openmeteo_munich,Munich - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+munich,openmeteo_aq_munich,Munich - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.509Z,pm25|pm10
+hamburg,openmeteo_hamburg,Hamburg - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+hamburg,openmeteo_aq_hamburg,Hamburg - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.509Z,pm25|pm10
+stuttgart,openmeteo_stuttgart,Stuttgart - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+stuttgart,openmeteo_aq_stuttgart,Stuttgart - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.509Z,pm25|pm10
+cologne,openmeteo_cologne,Cologne - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+cologne,openmeteo_aq_cologne,Cologne - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.509Z,pm25|pm10
+brussels,openmeteo_brussels,Brussels - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+brussels,openmeteo_aq_brussels,Brussels - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.509Z,pm25|pm10
+zurich,openmeteo_zurich,Zurich - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+zurich,openmeteo_aq_zurich,Zurich - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.509Z,pm25|pm10
+copenhagen,openmeteo_copenhagen,Copenhagen - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+copenhagen,openmeteo_aq_copenhagen,Copenhagen - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.509Z,pm25|pm10
+stockholm,openmeteo_stockholm,Stockholm - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+stockholm,openmeteo_aq_stockholm,Stockholm - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.509Z,pm25|pm10
+oslo,openmeteo_oslo,Oslo - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+oslo,openmeteo_aq_oslo,Oslo - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.509Z,pm25|pm10
+helsinki,openmeteo_helsinki,Helsinki - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+helsinki,openmeteo_aq_helsinki,Helsinki - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.509Z,pm25|pm10
+lisbon,openmeteo_lisbon,Lisbon - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+lisbon,openmeteo_aq_lisbon,Lisbon - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.509Z,pm25|pm10
+barcelona,openmeteo_barcelona,Barcelona - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+barcelona,openmeteo_aq_barcelona,Barcelona - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.509Z,pm25|pm10
+milan,openmeteo_milan,Milan - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+milan,openmeteo_aq_milan,Milan - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.509Z,pm25|pm10
+athens,openmeteo_athens,Athens - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+athens,openmeteo_aq_athens,Athens - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.509Z,pm25|pm10
+dublin,openmeteo_dublin,Dublin - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+dublin,openmeteo_aq_dublin,Dublin - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.509Z,pm25|pm10
+dublin,sc_74753,SC-74753,sensor_community,SDS011,2026-11-02 13:11:02,pm25|pm10
+bucharest,openmeteo_bucharest,Bucharest - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+bucharest,openmeteo_aq_bucharest,Bucharest - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.509Z,pm25|pm10
+sofia,openmeteo_sofia,Sofia - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+sofia,openmeteo_aq_sofia,Sofia - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.509Z,pm25|pm10
+zagreb,openmeteo_zagreb,Zagreb - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+zagreb,openmeteo_aq_zagreb,Zagreb - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.509Z,pm25|pm10
+belgrade,openmeteo_belgrade,Belgrade - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+belgrade,openmeteo_aq_belgrade,Belgrade - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.509Z,pm25|pm10
+kraków,openmeteo_kraków,Kraków - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+kraków,openmeteo_aq_kraków,Kraków - Open-Meteo Air Quality,open_meteo_aq,Air Quality Model (CAMS / Open-Meteo),2026-11-02T13:11:14.509Z,pm25|pm10
+roden,sc_53656,SC-53656,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+kőszeg,sc_90567,SC-90567,sensor_community,SDS011,2026-11-02 13:11:02,pm25|pm10
+wehl,sc_94123,SC-94123,sensor_community,SDS011,2026-11-02 13:11:02,pm25|pm10
+wehl,sc_62407,SC-62407,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+wehl,sc_56515,SC-56515,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+colónia,sc_14732,SC-14732,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+colónia,sc_93077,SC-93077,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+colónia,openmeteo_cologne,Cologne - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+haltern_am_see,sc_27145,SC-27145,sensor_community,SDS011,2026-11-02 13:11:02,pm25|pm10
+haltern_am_see,sc_18947,SC-18947,sensor_community,SDS011,2026-11-02 13:11:01,temperature|humidity|pm25|pm10
+haltern_am_see,sc_70183,SC-70183,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+fót,sc_97950,SC-97950,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+fót,openmeteo_budapest,Budapest - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+nordhausen,sc_45620,SC-45620,sensor_community,SDS011,2026-11-02 13:11:02,pm25|pm10
+balchik,sc_100439,SC-100439,sensor_community,SDS011,2026-11-02 13:11:02,pm25|pm10
+lovech,sc_98759,SC-98759,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+boxberg/o.l._-_hamor,sc_90925,SC-90925,sensor_community,SDS011,2026-11-02 13:11:02,pm25|pm10
+boxberg/o.l._-_hamor,sc_18778,SC-18778,sensor_community,SDS011,2026-11-02 13:10:59,temperature|humidity|pm25|pm10
+boxberg/o.l._-_hamor,sc_3849,SC-3849,sensor_community,SDS011,2026-11-02 13:11:01,temperature|humidity|pm25|pm10
+kralupy_nad_vltavou,sc_77350,SC-77350,sensor_community,SDS011,2026-11-02 13:11:02,pm25|pm10
+kralupy_nad_vltavou,openmeteo_prague,Prague - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+lohmar,sc_43670,SC-43670,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+lohmar,openmeteo_cologne,Cologne - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+berlim,sc_6537,SC-6537,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+berlim,sc_51354,SC-51354,sensor_community,SDS011,2026-11-02 13:11:02,pm25|pm10
+berlim,sc_9304,SC-9304,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+berlim,sc_15563,SC-15563,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+berlim,sc_70884,SC-70884,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+berlim,sc_71462,SC-71462,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+berlim,openmeteo_berlin,Berlin - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+rapperswil_(be),sc_91056,SC-91056,sensor_community,SDS011,2026-11-02 13:11:02,pm25|pm10
+rapperswil_(be),sc_35362,SC-35362,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+sófia,sc_43552,SC-43552,sensor_community,SDS011,2026-11-02 13:11:02,pm25|pm10
+sófia,sc_91581,SC-91581,sensor_community,SDS011,2026-11-02 13:11:02,pm25|pm10
+sófia,openmeteo_sofia,Sofia - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+ixelles_-_elsene,sc_10787,SC-10787,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+ixelles_-_elsene,openmeteo_brussels,Brussels - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+malden,sc_89401,SC-89401,sensor_community,SDS011,2026-11-02 13:11:02,pm25|pm10
+malden,sc_62407,SC-62407,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+malden,sc_8564,SC-8564,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+altenberge,sc_58972,SC-58972,sensor_community,SDS011,2026-11-02 13:11:02,pm25|pm10
+altenberge,sc_12703,SC-12703,sensor_community,SDS011,2026-11-02 13:10:59,temperature|humidity|pm25|pm10
+altenberge,sc_56515,SC-56515,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+ruda_śląska,sc_37355,SC-37355,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+edam,sc_95055,SC-95055,sensor_community,SDS011,2026-11-02 13:11:02,pm25|pm10
+edam,openmeteo_amsterdam,Amsterdam - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+constança,sc_13432,SC-13432,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+constança,openmeteo_zurich,Zurich - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+malsch,sc_75768,SC-75768,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+malsch,openmeteo_stuttgart,Stuttgart - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+vakarel,sc_13125,SC-13125,sensor_community,SDS011,2026-11-02 13:11:02,pm25|pm10
+vakarel,openmeteo_sofia,Sofia - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+marbach_am_neckar,sc_434,SC-434,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+marbach_am_neckar,openmeteo_stuttgart,Stuttgart - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+henfenfeld,sc_14306,SC-14306,sensor_community,SDS011,2026-11-02 13:11:02,pm25|pm10
+городской_округ_новороссийск,sc_78991,SC-78991,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+sinsheim,sc_60488,SC-60488,sensor_community,SDS011,2026-11-02 13:11:02,pm25|pm10
+sinsheim,sc_88926,SC-88926,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+sinsheim,sc_37071,SC-37071,sensor_community,SDS011,2026-11-02 13:10:58,temperature|humidity|pm25|pm10
+sinsheim,openmeteo_stuttgart,Stuttgart - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+courtrai,sc_81825,SC-81825,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+courtrai,openmeteo_brussels,Brussels - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+uccle_-_ukkel,sc_22490,SC-22490,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+uccle_-_ukkel,openmeteo_brussels,Brussels - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+hahnstätten,sc_74342,SC-74342,sensor_community,SDS011,2026-11-02 13:11:02,pm25|pm10
+hahnstätten,sc_63254,SC-63254,sensor_community,SDS011,2026-11-02 13:10:59,temperature|humidity|pm25|pm10
+meise,sc_31280,SC-31280,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+meise,openmeteo_brussels,Brussels - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+reutlingen,sc_96974,SC-96974,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity
+reutlingen,sc_505,SC-505,sensor_community,SDS011,2026-11-02 13:11:01,temperature|humidity|pm25|pm10
+reutlingen,sc_11197,SC-11197,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+reutlingen,openmeteo_stuttgart,Stuttgart - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+dorset,sc_64282,SC-64282,sensor_community,SDS011,2026-11-02 13:11:02,pm25|pm10
+sint_hubert,sc_62407,SC-62407,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+feuchtwangen,sc_99105,SC-99105,sensor_community,SDS011,2026-11-02 13:11:02,pm25|pm10
+ypres,sc_49494,SC-49494,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+schaerbeek_-_schaarbeek,sc_7899,SC-7899,sensor_community,SDS011,2026-11-02 13:11:01,temperature|humidity|pm25|pm10
+schaerbeek_-_schaarbeek,openmeteo_brussels,Brussels - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+estugarda,sc_9485,SC-9485,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+estugarda,sc_11197,SC-11197,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+estugarda,openmeteo_stuttgart,Stuttgart - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+estugarda,sc_8594,SC-8594,sensor_community,SDS011,2026-11-02 13:10:58,temperature|humidity|pm25|pm10
+breslávia,sc_77272,SC-77272,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+breslávia,sc_68319,SC-68319,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+dresden,sc_3849,SC-3849,sensor_community,SDS011,2026-11-02 13:11:01,temperature|humidity|pm25|pm10
+dresden,sc_74401,SC-74401,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+dresden,sc_74245,SC-74245,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+tubinga,sc_505,SC-505,sensor_community,SDS011,2026-11-02 13:11:01,temperature|humidity|pm25|pm10
+tubinga,openmeteo_stuttgart,Stuttgart - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+hamburgo,sc_17844,SC-17844,sensor_community,SDS011,2026-11-02 13:11:01,temperature|humidity|pm25|pm10
+hamburgo,sc_32844,SC-32844,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+hamburgo,sc_3587,SC-3587,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+hamburgo,sc_50319,SC-50319,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+hamburgo,openmeteo_hamburg,Hamburg - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+godzieszowa,sc_51961,SC-51961,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+praga,sc_75439,SC-75439,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+praga,openmeteo_prague,Prague - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+wörrstadt,sc_8038,SC-8038,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+wörrstadt,sc_63254,SC-63254,sensor_community,SDS011,2026-11-02 13:10:59,temperature|humidity|pm25|pm10
+wörrstadt,sc_88926,SC-88926,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+geraardsbergen,sc_86005,SC-86005,sensor_community,SDS011,2026-11-02 13:11:01,temperature|humidity|pm25|pm10
+geraardsbergen,openmeteo_brussels,Brussels - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+heubach,sc_6467,SC-6467,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+heubach,sc_434,SC-434,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+heubach,sc_8594,SC-8594,sensor_community,SDS011,2026-11-02 13:10:58,temperature|humidity|pm25|pm10
+heubach,openmeteo_stuttgart,Stuttgart - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+zaczernie,sc_65871,SC-65871,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+st._marienkirchen_an_der_polsenz,sc_96469,SC-96469,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+lünen,sc_18947,SC-18947,sensor_community,SDS011,2026-11-02 13:11:01,temperature|humidity|pm25|pm10
+hilversum,sc_98356,SC-98356,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+hilversum,openmeteo_amsterdam,Amsterdam - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+hilversum,sc_62407,SC-62407,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+city_of_valjevo,sc_15281,SC-15281,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+city_of_valjevo,openmeteo_belgrade,Belgrade - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+conegliano,sc_3726,SC-3726,sensor_community,SDS011,2026-11-02 13:11:01,temperature|humidity|pm25|pm10
+kumanovo,sc_82752,SC-82752,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+elsdorf,sc_28343,SC-28343,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+elsdorf,sc_71162,SC-71162,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+elsdorf,sc_14732,SC-14732,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+elsdorf,openmeteo_cologne,Cologne - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+krasnodar,sc_98069,SC-98069,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+ljubljana,sc_21901,SC-21901,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+erzhausen,sc_76098,SC-76098,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+erzhausen,sc_63254,SC-63254,sensor_community,SDS011,2026-11-02 13:10:59,temperature|humidity|pm25|pm10
+erzhausen,sc_88926,SC-88926,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+vaihingen_an_der_enz,sc_91787,SC-91787,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+vaihingen_an_der_enz,sc_8594,SC-8594,sensor_community,SDS011,2026-11-02 13:10:58,temperature|humidity|pm25|pm10
+vaihingen_an_der_enz,openmeteo_stuttgart,Stuttgart - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+"região_42.5°,_23.5°",sc_6463,SC-6463,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+"região_42.5°,_23.5°",sc_97149,SC-97149,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+"região_42.5°,_23.5°",openmeteo_sofia,Sofia - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+troisdorf,sc_58144,SC-58144,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+troisdorf,sc_43670,SC-43670,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+troisdorf,openmeteo_cologne,Cologne - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+munique,sc_86619,SC-86619,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+munique,sc_99475,SC-99475,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+munique,sc_30472,SC-30472,sensor_community,SDS011,2026-11-02 13:10:59,temperature|humidity|pm25|pm10
+munique,openmeteo_munich,Munich - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+pasching,sc_79480,SC-79480,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+aquisgrão,sc_74739,SC-74739,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+aquisgrão,sc_14732,SC-14732,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+aquisgrão,sc_18391,SC-18391,sensor_community,SDS011,2026-11-02 13:11:01,temperature|humidity|pm25|pm10
+aquisgrão,openmeteo_cologne,Cologne - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+tonbridge_and_malling,sc_49111,SC-49111,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+tonbridge_and_malling,openmeteo_london,London - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+konz,sc_20090,SC-20090,sensor_community,SDS011,2026-11-02 13:11:01,temperature|humidity|pm25|pm10
+langerwehe,sc_15677,SC-15677,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+langerwehe,sc_14732,SC-14732,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+langerwehe,openmeteo_cologne,Cologne - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+new_forest,sc_22308,SC-22308,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+gummersbach,sc_80756,SC-80756,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+gummersbach,sc_43670,SC-43670,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+gummersbach,sc_39310,SC-39310,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+gummersbach,openmeteo_cologne,Cologne - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+pirna,sc_86918,SC-86918,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+pirna,sc_3849,SC-3849,sensor_community,SDS011,2026-11-02 13:11:01,temperature|humidity|pm25|pm10
+apatity_urban_okrug,sc_82338,SC-82338,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+boqueho,sc_88503,SC-88503,sensor_community,SDS011,2026-11-02 13:11:01,temperature|humidity|pm25|pm10
+gmina_pilica,sc_50301,SC-50301,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+gmina_pilica,openmeteo_kraków,Kraków - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+gmina_pilica,sc_37355,SC-37355,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+dessau-roßlau,sc_3801,SC-3801,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+bad_oeynhausen,sc_20466,SC-20466,sensor_community,SDS011,2026-11-02 13:11:01,temperature|humidity|pm25|pm10
+arnhem,sc_1214,SC-1214,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+arnhem,sc_62407,SC-62407,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+arnhem,sc_56515,SC-56515,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+arnhem,openmeteo_amsterdam,Amsterdam - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+berg_am_irchel,sc_80261,SC-80261,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+berg_am_irchel,openmeteo_zurich,Zurich - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+berg_am_irchel,sc_35362,SC-35362,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+klausdorf,sc_419,SC-419,sensor_community,SDS011,2026-11-02 13:11:01,temperature|humidity|pm25|pm10
+aduard,sc_51636,SC-51636,sensor_community,SDS011,2026-11-02 13:11:01,temperature|humidity|pm25|pm10
+knurów,sc_77501,SC-77501,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+knurów,sc_37355,SC-37355,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+rosdorf,sc_25946,SC-25946,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+hasselt,sc_18391,SC-18391,sensor_community,SDS011,2026-11-02 13:11:01,temperature|humidity|pm25|pm10
+hasselt,openmeteo_brussels,Brussels - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+lorsch,sc_34930,SC-34930,sensor_community,SDS011,2026-11-02 13:11:01,pm25|pm10
+lorsch,sc_88926,SC-88926,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+lorsch,sc_37071,SC-37071,sensor_community,SDS011,2026-11-02 13:10:58,temperature|humidity|pm25|pm10
+sydney,sc_52065,SC-52065,sensor_community,SDS011,2026-11-02 13:11:01,temperature|humidity|pm25|pm10
+sydney,sc_16743,SC-16743,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+oravská_polhora,sc_92793,SC-92793,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+oravská_polhora,openmeteo_kraków,Kraków - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+ahaus,sc_56515,SC-56515,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+herten,sc_96059,SC-96059,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+herten,sc_70183,SC-70183,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+herten,sc_18947,SC-18947,sensor_community,SDS011,2026-11-02 13:11:01,temperature|humidity|pm25|pm10
+herten,openmeteo_cologne,Cologne - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+bad_endorf,sc_69170,SC-69170,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+bad_endorf,openmeteo_munich,Munich - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+bad_endorf,sc_30472,SC-30472,sensor_community,SDS011,2026-11-02 13:10:59,temperature|humidity|pm25|pm10
+dinslaken,sc_70183,SC-70183,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+dinslaken,openmeteo_cologne,Cologne - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+renningen,sc_54705,SC-54705,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+renningen,sc_85960,SC-85960,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+renningen,openmeteo_stuttgart,Stuttgart - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+erlangen,sc_79530,SC-79530,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+müglitztal,sc_36189,SC-36189,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+müglitztal,sc_3849,SC-3849,sensor_community,SDS011,2026-11-02 13:11:01,temperature|humidity|pm25|pm10
+marienberg,sc_76754,SC-76754,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+marienberg,sc_3849,SC-3849,sensor_community,SDS011,2026-11-02 13:11:01,temperature|humidity|pm25|pm10
+almere,sc_89661,SC-89661,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+almere,openmeteo_amsterdam,Amsterdam - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+temse,sc_41903,SC-41903,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+temse,openmeteo_brussels,Brussels - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+kamp-lintfort,sc_8564,SC-8564,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+kamp-lintfort,openmeteo_cologne,Cologne - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+fluorn-winzeln,sc_39738,SC-39738,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+fluorn-winzeln,sc_505,SC-505,sensor_community,SDS011,2026-11-02 13:11:01,temperature|humidity|pm25|pm10
+fluorn-winzeln,sc_85960,SC-85960,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+fluorn-winzeln,openmeteo_stuttgart,Stuttgart - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+dortmund,sc_4986,SC-4986,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+dortmund,sc_18947,SC-18947,sensor_community,SDS011,2026-11-02 13:11:01,temperature|humidity|pm25|pm10
+dortmund,sc_39310,SC-39310,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+dortmund,openmeteo_cologne,Cologne - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+jardin,sc_40122,SC-40122,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+nazareth,sc_95162,SC-95162,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+nazareth,sc_86005,SC-86005,sensor_community,SDS011,2026-11-02 13:11:01,temperature|humidity|pm25|pm10
+nazareth,sc_81825,SC-81825,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+nazareth,openmeteo_brussels,Brussels - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+yıldırım,sc_89506,SC-89506,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+mol,sc_49828,SC-49828,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+mol,openmeteo_brussels,Brussels - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+welwyn_hatfield,sc_99353,SC-99353,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+welwyn_hatfield,openmeteo_london,London - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+laguna_niguel,sc_90193,SC-90193,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+aidlingen,sc_85960,SC-85960,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+aidlingen,openmeteo_stuttgart,Stuttgart - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+olpe,sc_55031,SC-55031,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+olpe,sc_43670,SC-43670,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+olpe,sc_39310,SC-39310,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+olpe,openmeteo_cologne,Cologne - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+fünfstetten,sc_101320,SC-101320,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+fünfstetten,sc_90186,SC-90186,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+jasiów,sc_33605,SC-33605,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+schwieberdingen,sc_77573,SC-77573,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+schwieberdingen,sc_8594,SC-8594,sensor_community,SDS011,2026-11-02 13:10:58,temperature|humidity|pm25|pm10
+schwieberdingen,openmeteo_stuttgart,Stuttgart - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+rotselaar,sc_24145,SC-24145,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+rotselaar,openmeteo_brussels,Brussels - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+moscou,sc_85912,SC-85912,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+hilgertshausen-tandern,sc_90186,SC-90186,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+hilgertshausen-tandern,openmeteo_munich,Munich - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+wuppertal,sc_39310,SC-39310,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+wuppertal,openmeteo_cologne,Cologne - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+vlijmen,sc_67253,SC-67253,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+vlijmen,sc_62407,SC-62407,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+vlijmen,sc_49828,SC-49828,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+vlijmen,openmeteo_amsterdam,Amsterdam - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+toulouse,sc_15645,SC-15645,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+toulouse,sc_71243,SC-71243,sensor_community,SDS011,2026-11-02 13:10:59,temperature|humidity|pm25|pm10
+clapiers,sc_79456,SC-79456,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+zoersel,sc_91429,SC-91429,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+zoersel,sc_49828,SC-49828,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+zoersel,sc_24145,SC-24145,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+zoersel,openmeteo_brussels,Brussels - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+rydułtowy,sc_33690,SC-33690,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+rydułtowy,sc_37355,SC-37355,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+windisch,sc_35362,SC-35362,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+windisch,openmeteo_zurich,Zurich - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+jüchen,sc_29958,SC-29958,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+jüchen,sc_14732,SC-14732,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+jüchen,openmeteo_cologne,Cologne - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+bonaire,sc_101125,SC-101125,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+berna,sc_85301,SC-85301,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+plovdiv,sc_35685,SC-35685,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+stadtgebiet_bremen,sc_13862,SC-13862,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+stadtgebiet_bremen,sc_11386,SC-11386,sensor_community,SDS011,2026-11-02 13:10:59,temperature|humidity|pm25|pm10
+schönbrunn,sc_88926,SC-88926,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+schönbrunn,openmeteo_stuttgart,Stuttgart - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+cracóvia,sc_67640,SC-67640,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+cracóvia,openmeteo_kraków,Kraków - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+pernik,sc_11344,SC-11344,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+pernik,openmeteo_sofia,Sofia - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+paderborn,sc_44634,SC-44634,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+weilheim_in_oberbayern,sc_100098,SC-100098,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+weilheim_in_oberbayern,sc_30472,SC-30472,sensor_community,SDS011,2026-11-02 13:10:59,temperature|humidity|pm25|pm10
+weilheim_in_oberbayern,openmeteo_munich,Munich - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+ludwigshafen_am_rhein,sc_72362,SC-72362,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+ludwigshafen_am_rhein,sc_53169,SC-53169,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+ludwigshafen_am_rhein,sc_37071,SC-37071,sensor_community,SDS011,2026-11-02 13:10:58,temperature|humidity|pm25|pm10
+ludwigshafen_am_rhein,sc_88926,SC-88926,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+mainburg,sc_94307,SC-94307,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+mainburg,sc_90186,SC-90186,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+mainburg,openmeteo_munich,Munich - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+plana,sc_64777,SC-64777,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+plana,openmeteo_sofia,Sofia - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+bad_rodach,sc_36995,SC-36995,sensor_community,SDS011,2026-11-02 13:11:00,pm25|pm10
+dachau,sc_10475,SC-10475,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+dachau,sc_30472,SC-30472,sensor_community,SDS011,2026-11-02 13:10:59,temperature|humidity|pm25|pm10
+dachau,openmeteo_munich,Munich - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+bucha_urban_hromada,sc_79541,SC-79541,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+saerbeck,sc_12703,SC-12703,sensor_community,SDS011,2026-11-02 13:10:59,temperature|humidity|pm25|pm10
+moulis,sc_71243,SC-71243,sensor_community,SDS011,2026-11-02 13:10:59,temperature|humidity|pm25|pm10
+надеждинское_сельское_поселение,sc_73540,SC-73540,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+arnstein,sc_56746,SC-56746,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+klagenfurt,sc_61578,SC-61578,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+enschede,sc_74080,SC-74080,sensor_community,SDS011,2026-11-02 13:10:59,temperature|humidity|pm25|pm10
+родниковское_городское_поселение,sc_86846,SC-86846,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+biebergemünd,sc_17055,SC-17055,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+biebergemünd,sc_63254,SC-63254,sensor_community,SDS011,2026-11-02 13:10:59,temperature|humidity|pm25|pm10
+rzeszów,sc_43303,SC-43303,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+kassel,sc_66333,SC-66333,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+kassel,sc_44634,SC-44634,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+cheltenham,sc_64397,SC-64397,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+altenstadt,sc_63254,SC-63254,sensor_community,SDS011,2026-11-02 13:10:59,temperature|humidity|pm25|pm10
+cottbus_-_chóśebuz,sc_18778,SC-18778,sensor_community,SDS011,2026-11-02 13:10:59,temperature|humidity|pm25|pm10
+bistritsa,sc_90416,SC-90416,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+bistritsa,openmeteo_sofia,Sofia - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+ter_apel,sc_52363,SC-52363,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+ter_apel,sc_57395,SC-57395,sensor_community,SDS011,2026-11-02 13:10:59,temperature|humidity|pm25|pm10
+ter_apel,sc_53656,SC-53656,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+le_cellier,sc_4686,SC-4686,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+uithuizermeeden,sc_81619,SC-81619,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+uithuizermeeden,sc_51636,SC-51636,sensor_community,SDS011,2026-11-02 13:11:01,temperature|humidity|pm25|pm10
+uithuizermeeden,sc_53656,SC-53656,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+leusden,sc_72115,SC-72115,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+leusden,openmeteo_amsterdam,Amsterdam - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+leusden,sc_62407,SC-62407,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+varna,sc_39946,SC-39946,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+hude_(oldenburg),sc_11386,SC-11386,sensor_community,SDS011,2026-11-02 13:10:59,temperature|humidity|pm25|pm10
+kittilä,sc_60000,SC-60000,sensor_community,SDS011,2026-11-02 13:10:59,temperature|humidity|pm25|pm10
+schwedt/oder,sc_45194,SC-45194,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+busca,sc_49548,SC-49548,sensor_community,SDS011,2026-11-02 13:10:59,temperature|humidity|pm25|pm10
+brescia,sc_99393,SC-99393,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+brescia,openmeteo_milan,Milan - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+2e_exloërmond,sc_57395,SC-57395,sensor_community,SDS011,2026-11-02 13:10:59,temperature|humidity|pm25|pm10
+burtenbach,sc_92859,SC-92859,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+burtenbach,sc_90186,SC-90186,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+burtenbach,sc_30472,SC-30472,sensor_community,SDS011,2026-11-02 13:10:59,temperature|humidity|pm25|pm10
+marwijksoord,sc_58498,SC-58498,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+marwijksoord,sc_57395,SC-57395,sensor_community,SDS011,2026-11-02 13:10:59,temperature|humidity|pm25|pm10
+marwijksoord,sc_53656,SC-53656,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+crema,sc_87426,SC-87426,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+crema,openmeteo_milan,Milan - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+zoetermeer,sc_66765,SC-66765,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+zoetermeer,openmeteo_amsterdam,Amsterdam - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+groningen,sc_29358,SC-29358,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+groningen,sc_51636,SC-51636,sensor_community,SDS011,2026-11-02 13:11:01,temperature|humidity|pm25|pm10
+groningen,sc_53656,SC-53656,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+alt_tucheband,sc_84717,SC-84717,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+alt_tucheband,sc_6537,SC-6537,sensor_community,SDS011,2026-11-02 13:11:02,temperature|humidity|pm25|pm10
+alt_tucheband,openmeteo_berlin,Berlin - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+bełchatów,sc_22565,SC-22565,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+mareuil,sc_42408,SC-42408,sensor_community,SDS011,2026-11-02 13:10:59,temperature|humidity|pm25|pm10
+delbrück,sc_11777,SC-11777,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+delbrück,sc_44634,SC-44634,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+delbrück,sc_20466,SC-20466,sensor_community,SDS011,2026-11-02 13:11:01,temperature|humidity|pm25|pm10
+waibstadt,sc_65035,SC-65035,sensor_community,SDS011,2026-11-02 13:10:59,pm25|pm10
+waibstadt,sc_88926,SC-88926,sensor_community,SDS011,2026-11-02 13:11:00,temperature|humidity|pm25|pm10
+waibstadt,sc_37071,SC-37071,sensor_community,SDS011,2026-11-02 13:10:58,temperature|humidity|pm25|pm10
+waibstadt,openmeteo_stuttgart,Stuttgart - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+nieuwkoop,sc_48564,SC-48564,sensor_community,SDS011,2026-11-02 13:10:58,pm25|pm10
+nieuwkoop,openmeteo_amsterdam,Amsterdam - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+kornwestheim,sc_8594,SC-8594,sensor_community,SDS011,2026-11-02 13:10:58,temperature|humidity|pm25|pm10
+kornwestheim,openmeteo_stuttgart,Stuttgart - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+kronau,sc_37071,SC-37071,sensor_community,SDS011,2026-11-02 13:10:58,temperature|humidity|pm25|pm10
+kronau,openmeteo_stuttgart,Stuttgart - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+сельское_поселение_светлое_поле,sc_86084,SC-86084,sensor_community,SDS011,2026-11-02 13:10:58,pm25|pm10
+estocolmo,sc_12683,SC-12683,sensor_community,SDS011,2026-11-02 13:10:58,pm25|pm10
+estocolmo,openmeteo_stockholm,Stockholm - Open-Meteo,open_meteo,Weather Station (Open-Meteo),2026-11-02T13:11:14.513Z,temperature|humidity|windSpeed
+manolsko_konare,sc_33553,SC-33553,sensor_community,SDS011,2026-11-02 13:10:58,pm25|pm10
