@@ -1,0 +1,51 @@
+﻿cidade,pais,quantidade_sensores,temperatura,umidade,pm25,pm10,velocidade_vento,indice_icaud,classificacao
+São Paulo,BR,2,24.4,71.0,13.2,13.2,10.7,68.3,Comfortable
+Rio de Janeiro,BR,2,28.1,75.0,7.4,7.9,3.5,69.3,Comfortable
+Belo Horizonte,BR,2,24.9,67.0,5.3,5.5,9.2,73.0,Comfortable
+Brasília,BR,2,26.9,57.0,5.0,5.1,10.0,76.0,Comfortable
+Salvador,BR,2,29.0,62.0,9.1,12.9,16.5,68.0,Comfortable
+Fortaleza,BR,2,30.5,57.0,7.7,13.0,22.9,69.1,Comfortable
+Recife,BR,2,30.1,58.0,10.4,15.5,14.2,68.1,Comfortable
+Manaus,BR,2,29.1,77.0,31.7,32.9,3.3,57.2,Uncomfortable
+Curitiba,BR,2,22.0,74.0,3.7,3.8,15.2,74.1,Comfortable
+Porto Alegre,BR,2,22.8,88.0,9.3,9.6,13.0,62.2,Comfortable
+Goiânia,BR,2,29.7,55.0,3.3,3.4,3.4,80.6,Very Comfortable
+Belém,BR,2,31.3,59.0,12.0,16.7,9.5,64.9,Comfortable
+Vitória,BR,2,26.3,81.0,7.2,9.7,11.7,61.6,Comfortable
+Florianópolis,BR,2,26.1,72.0,5.0,7.0,15.0,68.2,Comfortable
+Cuiabá,BR,2,33.2,51.0,4.3,4.6,9.5,69.8,Comfortable
+Campo Grande,BR,2,30.7,55.0,2.5,2.6,16.3,72.1,Comfortable
+Maceió,BR,2,28.3,72.0,6.4,9.9,17.6,64.2,Comfortable
+João Pessoa,BR,2,30.3,55.0,9.1,13.9,17.1,70.1,Comfortable
+Natal,BR,2,30.6,54.0,7.9,12.4,20.4,70.7,Comfortable
+Aracaju,BR,2,28.8,67.0,4.7,7.0,17.0,67.0,Comfortable
+Teresina,BR,2,34.4,38.0,5.6,7.7,12.4,60.7,Comfortable
+São Luís,BR,2,32.2,55.0,7.9,12.9,18.6,67.5,Comfortable
+Palmas,BR,2,30.7,62.0,7.2,7.8,8.8,66.0,Comfortable
+Porto Velho,BR,2,27.4,81.0,22.4,23.3,2.3,63.2,Comfortable
+Boa Vista,BR,2,32.4,46.0,17.7,18.6,15.2,63.9,Comfortable
+Macapá,BR,2,30.5,64.0,8.5,12.0,17.0,64.6,Comfortable
+Rio Branco,BR,2,27.7,81.0,4.4,4.4,9.7,60.5,Comfortable
+Campinas,BR,2,24.1,76.0,20.5,21.1,9.2,62.8,Comfortable
+Guarulhos,BR,2,24.4,71.0,15.9,15.9,12.9,67.2,Comfortable
+São Bernardo do Campo,BR,2,23.6,77.0,15.9,15.9,13.2,64.9,Comfortable
+Santo André,BR,2,24.4,71.0,15.9,15.9,11.8,67.2,Comfortable
+Osasco,BR,2,23.4,78.0,13.2,13.2,8.4,65.7,Comfortable
+Ribeirão Preto,BR,2,29.5,58.0,14.6,15.1,7.6,67.4,Comfortable
+Sorocaba,BR,2,23.0,84.0,21.8,22.3,3.8,65.7,Comfortable
+Santos,BR,2,23.7,87.0,34.2,35.2,8.2,51.4,Uncomfortable
+Niterói,BR,2,28.7,72.0,7.4,7.9,4.6,67.9,Comfortable
+Duque de Caxias,BR,2,27.0,77.0,7.4,7.9,3.6,69.6,Comfortable
+Nova Iguaçu,BR,2,29.1,72.0,8.0,8.0,4.7,66.8,Comfortable
+São Gonçalo,BR,2,28.7,71.0,7.4,7.9,5.2,67.3,Comfortable
+Uberlândia,BR,2,28.3,56.0,3.9,4.0,11.8,74.8,Comfortable
+Juiz de Fora,BR,2,24.0,73.0,3.7,3.8,16.2,71.5,Comfortable
+Londrina,BR,2,24.2,77.0,8.1,8.5,12.0,67.0,Comfortable
+Maringá,BR,2,26.5,72.0,9.4,10.0,12.6,65.8,Comfortable
+Joinville,BR,2,24.4,83.0,3.0,3.4,3.7,71.8,Comfortable
+Caxias do Sul,BR,2,21.1,79.0,2.8,2.9,15.3,70.0,Comfortable
+Pelotas,BR,2,26.2,63.0,5.2,6.8,1.7,82.8,Very Comfortable
+Feira de Santana,BR,2,31.1,48.0,7.0,9.4,14.6,71.4,Comfortable
+Caruaru,BR,2,29.5,44.0,7.5,9.7,18.1,71.4,Comfortable
+Berlin,DE,2,9.7,65.0,9.3,12.4,4.0,63.6,Comfortable
+London,GB,2,12.0,62.0,3.4,7.2,17.3,65.4,Comfortable
