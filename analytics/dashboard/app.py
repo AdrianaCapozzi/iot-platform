@@ -23,7 +23,6 @@ warnings.filterwarnings("ignore")
 
 st.set_page_config(
     page_title="EcoSense | Inteligência Ambiental",
-    page_icon="🌱",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -32,31 +31,92 @@ st.set_page_config(
 # IDENTIDADE VISUAL
 # ------------------------------------------------------------
 
-COR_PRINCIPAL = "#147D64"
-COR_SECUNDARIA = "#38A58C"
-COR_DESTAQUE = "#E8A838"
-COR_FUNDO = "#F4F7F6"
+VERDE = "#35C99A"
+VERDE_ESCURO = "#147D64"
+FUNDO = "#101A18"
+PAINEL = "#192824"
+TEXTO = "#E8F2EE"
+CINZA = "#9FB3AA"
 
 st.markdown("""
 <style>
     .stApp {
-        background-color: #F4F7F6;
+        background: #101A18;
+        color: #E8F2EE;
     }
-    h1, h2, h3 {
-        color: #147D64;
+
+    [data-testid="stHeader"] {
+        background: rgba(16, 26, 24, 0.95);
     }
+
+    [data-testid="stSidebar"] {
+        background: #192824;
+        border-right: 1px solid #29443A;
+    }
+
     [data-testid="stMetric"] {
-        background-color: white;
-        border: 1px solid #DCE7E2;
-        padding: 15px;
-        border-radius: 10px;
+        background: #192824;
+        border: 1px solid #29443A;
+        border-radius: 12px;
+        padding: 16px;
     }
-    section[data-testid="stSidebar"] {
-        background-color: #E5EFEA;
+
+    [data-testid="stMetricLabel"] {
+        color: #AFC5BA;
+    }
+
+    [data-testid="stMetricValue"] {
+        color: #E8F2EE;
+    }
+
+    h1, h2, h3, p, label {
+        color: #E8F2EE;
+    }
+
+    .eco-header {
+        background: linear-gradient(
+            110deg,
+            #0B493A 0%,
+            #147D64 48%,
+            #35C99A 100%
+        );
+        padding: 30px 34px;
+        border-radius: 16px;
+        margin-bottom: 24px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    }
+
+    .eco-header h1 {
+        color: #FFFFFF;
+        font-size: 36px;
+        margin: 0;
+        font-weight: 700;
+    }
+
+    .eco-header p {
+        color: #E0FFF2;
+        font-size: 15px;
+        margin-top: 8px;
+        margin-bottom: 0;
+    }
+
+    div[data-testid="stPlotlyChart"],
+    div[data-testid="stDataFrame"] {
+        background: #192824;
+        border-radius: 12px;
+        padding: 8px;
+    }
+
+    .stSelectbox label,
+    .stMultiSelect label {
+        color: #E8F2EE !important;
+    }
+
+    hr {
+        border-color: #29443A;
     }
 </style>
 """, unsafe_allow_html=True)
-
 
 # ------------------------------------------------------------
 # LOCALIZAÇÃO DOS ARQUIVOS
