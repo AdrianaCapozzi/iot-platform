@@ -1,1100 +1,837 @@
 
-# ============================================================
-# EcoSense | Dashboard de Inteligência Ambiental
-# Projeto Integrador - Análise de Dados
-# ============================================================
-
-import os
+from pathlib import Path
 import re
-import warnings
 
-import streamlit as st
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
+import streamlit as st
 import plotly.express as px
+import plotly.graph_objects as go
 
-warnings.filterwarnings("ignore")
 
-# ------------------------------------------------------------
-# CONFIGURAÇÃO DA PÁGINA
-# ------------------------------------------------------------
+# ============================================================
+# CONFIGURAÇÃO
+# ============================================================
 
 st.set_page_config(
-    page_title="EcoSense | Inteligência Ambiental",
+    page_title="EcoSense | Painel Ambiental",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# ------------------------------------------------------------
-# IDENTIDADE VISUAL
-# ------------------------------------------------------------
+BASE_DIR = Path(__file__).resolve().parents[2]
+PASTA_DADOS = BASE_DIR / "analytics" / "outputs"
 
-VERDE = "#35C99A"
-VERDE_ESCURO = "#147D64"
+ARQUIVO_CIDADES = PASTA_DADOS / "cidades.csv"
+ARQUIVO_SENSORES = PASTA_DADOS / "sensores.csv"
+
 FUNDO = "#101A18"
 PAINEL = "#192824"
+VERDE = "#35C99A"
 TEXTO = "#E8F2EE"
-CINZA = "#9FB3AA"
+CINZA = "#A9B9B2"
+
+
+# ============================================================
+# ESTILO VISUAL
+# ============================================================
 
 st.markdown("""
 <style>
     .stApp {
-        background: #101A18;
+        background-color: #101A18;
         color: #E8F2EE;
-    }
-
-    [data-testid="stHeader"] {
-        background: rgba(16, 26, 24, 0.95);
     }
 
     [data-testid="stSidebar"] {
-        background: #192824;
-        border-right: 1px solid #29443A;
+        background-color: #192824;
     }
 
-    [data-testid="stMetric"] {
-        background: #192824;
-        border: 1px solid #29443A;
-        border-radius: 12px;
+    h1, h2, h3 {
+        color: #E8F2EE;
+    }
+
+    div[data-testid="stMetric"] {
+        background-color: #192824;
+        border: 1px solid #29483E;
         padding: 16px;
+        border-radius: 12px;
     }
 
-    [data-testid="stMetricLabel"] {
-        color: #AFC5BA;
+    div[data-testid="stMetricValue"] {
+        color: #35C99A;
     }
 
-    [data-testid="stMetricValue"] {
-        color: #E8F2EE;
-    }
-
-    h1, h2, h3, p, label {
-        color: #E8F2EE;
-    }
-
-    .eco-header {
-        background: linear-gradient(
-            110deg,
-            #0B493A 0%,
-            #147D64 48%,
-            #35C99A 100%
-        );
-        padding: 30px 34px;
+    .cabecalho {
+        background: linear-gradient(110deg, #173B32, #236B53, #35A982);
+        padding: 28px;
         border-radius: 16px;
-        margin-bottom: 24px;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+        margin-bottom: 22px;
     }
 
-    .eco-header h1 {
-        color: #FFFFFF;
-        font-size: 36px;
-        margin: 0;
-        font-weight: 700;
+    .cabecalho h1 {
+        color: white;
+        margin-bottom: 5px;
     }
 
-    .eco-header p {
-        color: #E0FFF2;
-        font-size: 15px;
-        margin-top: 8px;
+    .cabecalho p {
+        color: #E8F2EE;
         margin-bottom: 0;
     }
 
-    div[data-testid="stPlotlyChart"],
-    div[data-testid="stDataFrame"] {
-        background: #192824;
-        border-radius: 12px;
-        padding: 8px;
+    .secao {
+        padding-top: 12px;
+        padding-bottom: 4px;
     }
 
-    .stSelectbox label,
-    .stMultiSelect label {
-        color: #E8F2EE !important;
-    }
-
-    hr {
-        border-color: #29443A;
+    footer {
+        visibility: hidden;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# ------------------------------------------------------------
-# LOCALIZAÇÃO DOS ARQUIVOS
-# ------------------------------------------------------------
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(
-    os.path.abspath(__file__)
-)))
-
-CAMINHO_CIDADES = os.path.join(BASE_DIR, "cidades.csv")
-
-# Alternativa caso o CSV esteja na pasta analytics/outputs
-if not os.path.exists(CAMINHO_CIDADES):
-    CAMINHO_CIDADES = os.path.join(
-        BASE_DIR, "analytics", "outputs", "cidades.csv"
-    )
-
-
-# ------------------------------------------------------------
-# FUNÇÕES AUXILIARES
-# ------------------------------------------------------------
-
-def normalizar_nome(nome):
-    """Padroniza nomes de colunas para facilitar o reconhecimento."""
-    nome = str(nome).strip().lower()
-    nome = re.sub(r"[^a-z0-9]", "", nome)
-    return nome
-
-
-def localizar_coluna(df, alternativas):
-    """Localiza uma coluna a partir de possíveis nomes equivalentes."""
-    mapa = {normalizar_nome(col): col for col in df.columns}
-
-    for alternativa in alternativas:
-        chave = normalizar_nome(alternativa)
-        if chave in mapa:
-            return mapa[chave]
-
-    return None
-
-
-def converter_numericas(df, colunas):
-    """Converte as colunas selecionadas para formato numérico."""
-    for coluna in colunas:
-        if coluna and coluna in df.columns:
-            df[coluna] = pd.to_numeric(df[coluna], errors="coerce")
-    return df
-
-
-# ------------------------------------------------------------
-# CARREGAMENTO DOS DADOS
-# ------------------------------------------------------------
+# ============================================================
+# LEITURA DOS ARQUIVOS
+# ============================================================
 
 @st.cache_data
-def carregar_dados(caminho):
-    return pd.read_csv(caminho)
-
-
-if not os.path.exists(CAMINHO_CIDADES):
-    st.error("Arquivo cidades.csv não encontrado.")
-    st.info(
-        "Coloque cidades.csv na raiz do projeto "
-        "ou em analytics/outputs/."
+def carregar_dados():
+    cidades = pd.read_csv(
+        ARQUIVO_CIDADES,
+        encoding="utf-8-sig"
     )
-    st.stop()
 
-df_original = carregar_dados(CAMINHO_CIDADES)
-df = df_original.copy()
+    sensores = pd.read_csv(
+        ARQUIVO_SENSORES,
+        encoding="utf-8-sig"
+    )
 
-
-# ------------------------------------------------------------
-# RECONHECIMENTO AUTOMÁTICO DAS COLUNAS
-# Ajuste as alternativas caso seu CSV use outros nomes.
-# ------------------------------------------------------------
-
-COL_CIDADE = localizar_coluna(
-    df, ["name", "city", "cidade", "city_name", "nome"]
-)
-
-COL_PAIS = localizar_coluna(
-    df, ["country", "pais", "country_code"]
-)
-
-COL_TEMP = localizar_coluna(
-    df, ["temperature", "temp", "temperatura", "temperature_c"]
-)
-
-COL_UMIDADE = localizar_coluna(
-    df, ["humidity", "umidade", "relative_humidity"]
-)
-
-COL_PM25 = localizar_coluna(
-    df, ["pm25", "pm2_5", "pm2.5", "particulate_matter_2_5"]
-)
-
-COL_PM10 = localizar_coluna(
-    df, ["pm10", "particulate_matter_10"]
-)
-
-COL_VENTO = localizar_coluna(
-    df, ["windspeed", "wind_speed", "velocidade_vento", "wind"]
-)
-
-COL_ICAUD = localizar_coluna(
-    df, ["icaud", "indice", "comfort_index", "environmental_index"]
-)
-
-COL_CLASSIFICACAO = localizar_coluna(
-    df, ["classification", "classificacao", "comfort_level", "category"]
-)
+    return cidades, sensores
 
 
-COLUNAS_METRICAS = [
-    COL_TEMP,
-    COL_UMIDADE,
-    COL_PM25,
-    COL_PM10,
-    COL_VENTO,
-    COL_ICAUD
+cidades, sensores = carregar_dados()
+
+# Padronização dos nomes das colunas
+cidades.columns = cidades.columns.str.strip()
+sensores.columns = sensores.columns.str.strip()
+
+# Conversão dos campos numéricos das cidades
+colunas_numericas = [
+    "lat", "lon", "sensor_count",
+    "temperature", "humidity",
+    "pm25", "pm10", "wind_speed",
+    "icaud_score", "icaud_min", "icaud_max",
+    "cmp_temperature", "cmp_humidity",
+    "cmp_airQuality", "cmp_wind",
+    "w_temperature", "w_humidity",
+    "w_airQuality", "w_wind"
 ]
 
-df = converter_numericas(df, COLUNAS_METRICAS)
+for coluna in colunas_numericas:
+    if coluna in cidades.columns:
+        cidades[coluna] = pd.to_numeric(
+            cidades[coluna],
+            errors="coerce"
+        )
 
-# Nomes amigáveis para visualização
-NOMES_METRICAS = {
-    COL_TEMP: "Temperatura (°C)",
-    COL_UMIDADE: "Umidade (%)",
-    COL_PM25: "PM2.5",
-    COL_PM10: "PM10",
-    COL_VENTO: "Velocidade do vento",
-    COL_ICAUD: "ICAU-D"
-}
+# Conversão dos campos de texto
+for coluna in ["name", "country", "icaud_class"]:
+    if coluna in cidades.columns:
+        cidades[coluna] = cidades[coluna].fillna("Não informado").astype(str)
 
-METRICAS_DISPONIVEIS = [
-    col for col in COLUNAS_METRICAS
-    if col is not None and col in df.columns
-]
+for coluna in ["source", "device_type", "provides", "name"]:
+    if coluna in sensores.columns:
+        sensores[coluna] = sensores[coluna].fillna("Não informado").astype(str)
 
+# Identificação da cidade de cada sensor
+if "city_id" in sensores.columns and "id" in cidades.columns:
+    mapa_cidades = cidades[["id", "name"]].drop_duplicates()
+    sensores = sensores.merge(
+        mapa_cidades,
+        left_on="city_id",
+        right_on="id",
+        how="left",
+        suffixes=("", "_cidade")
+    )
+
+    if "name_cidade" in sensores.columns:
+        sensores["cidade"] = sensores["name_cidade"]
+    else:
+        sensores["cidade"] = sensores["name"]
+
+    sensores["cidade"] = sensores["cidade"].fillna("Cidade não identificada")
 
 
 # ============================================================
-# ECOSENSE | INTERFACE E VISUALIZACOES DO DASHBOARD
+# CABEÇALHO
 # ============================================================
 
-# ------------------------------------------------------------
-# IDENTIDADE VISUAL - TEMA ESCURO
-# ------------------------------------------------------------
-
 st.markdown("""
-<style>
-    .stApp {
-        background-color: #101A18;
-        color: #E8F2EE;
-    }
-
-    [data-testid="stHeader"] {
-        background-color: #101A18;
-    }
-
-    [data-testid="stSidebar"] {
-        background-color: #192824;
-        border-right: 1px solid #29443A;
-    }
-
-    [data-testid="stMetric"] {
-        background-color: #192824;
-        border: 1px solid #29443A;
-        border-radius: 12px;
-        padding: 16px;
-    }
-
-    [data-testid="stMetricLabel"] {
-        color: #AFC5BA !important;
-    }
-
-    [data-testid="stMetricValue"] {
-        color: #E8F2EE !important;
-    }
-
-    h1, h2, h3, p, label {
-        color: #E8F2EE;
-    }
-
-    .eco-header {
-        background: linear-gradient(
-            110deg,
-            #0B493A 0%,
-            #147D64 48%,
-            #35C99A 100%
-        );
-        padding: 30px 34px;
-        border-radius: 16px;
-        margin-bottom: 25px;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.25);
-    }
-
-    .eco-header h1 {
-        color: #FFFFFF;
-        font-size: 36px;
-        margin: 0;
-        font-weight: 700;
-    }
-
-    .eco-header p {
-        color: #E0FFF2;
-        font-size: 14px;
-        margin-top: 8px;
-        margin-bottom: 0;
-    }
-
-    div[data-testid="stPlotlyChart"] {
-        background-color: #192824;
-        border-radius: 12px;
-        padding: 8px;
-    }
-
-    hr {
-        border-color: #29443A;
-    }
-</style>
-""", unsafe_allow_html=True)
-
-
-# ------------------------------------------------------------
-# CABECALHO
-# ------------------------------------------------------------
-
-st.markdown("""
-<div class="eco-header">
-    <h1>EcoSense</h1>
-    <p>INTELIGÊNCIA AMBIENTAL | ANÁLISE DE DADOS E INDICADORES URBANOS</p>
+<div class="cabecalho">
+    <h1>EcoSense | Inteligência Ambiental</h1>
+    <p>
+        Análise de indicadores ambientais, qualidade do ar
+        e monitoramento de sensores urbanos.
+    </p>
 </div>
 """, unsafe_allow_html=True)
 
-st.markdown(
-    "Painel analítico para exploração de indicadores ambientais, "
-    "qualidade do ar e conforto urbano."
+
+# ============================================================
+# FILTROS
+# ============================================================
+
+st.sidebar.title("Filtros de análise")
+
+paises = sorted(cidades["country"].dropna().unique().tolist())
+classes = sorted(cidades["icaud_class"].dropna().unique().tolist())
+
+paises_selecionados = st.sidebar.multiselect(
+    "País",
+    paises,
+    default=paises
 )
 
-st.divider()
-
-
-# ------------------------------------------------------------
-# FUNCAO AUXILIAR PARA IDENTIFICAR COLUNAS
-# ------------------------------------------------------------
-
-def localizar_coluna_dashboard(dataframe, alternativas):
-
-    def normalizar(texto):
-        texto = str(texto).strip().lower()
-        return re.sub(r"[^a-z0-9]", "", texto)
-
-    mapa_colunas = {
-        normalizar(coluna): coluna
-        for coluna in dataframe.columns
-    }
-
-    for alternativa in alternativas:
-        chave = normalizar(alternativa)
-
-        if chave in mapa_colunas:
-            return mapa_colunas[chave]
-
-    return None
-
-
-# ------------------------------------------------------------
-# FILTROS LATERAIS
-# ------------------------------------------------------------
-
-st.sidebar.header("FILTROS")
-
-df_filtrado = df.copy()
-
-if COL_PAIS:
-
-    paises = sorted(
-        df[COL_PAIS].dropna().astype(str).unique().tolist()
-    )
-
-    pais_selecionado = st.sidebar.multiselect(
-        "País",
-        options=paises,
-        default=paises
-    )
-
-    df_filtrado = df_filtrado[
-        df_filtrado[COL_PAIS].astype(str).isin(pais_selecionado)
-    ]
-
-
-if COL_CIDADE:
-
-    cidades = sorted(
-        df_filtrado[COL_CIDADE]
-        .dropna()
-        .astype(str)
-        .unique()
-        .tolist()
-    )
-
-    cidades_selecionadas = st.sidebar.multiselect(
-        "Cidades",
-        options=cidades,
-        default=cidades
-    )
-
-    df_filtrado = df_filtrado[
-        df_filtrado[COL_CIDADE]
-        .astype(str)
-        .isin(cidades_selecionadas)
-    ]
-
-
-if COL_CLASSIFICACAO:
-
-    classificacoes = sorted(
-        df_filtrado[COL_CLASSIFICACAO]
-        .dropna()
-        .astype(str)
-        .unique()
-        .tolist()
-    )
-
-    classes_selecionadas = st.sidebar.multiselect(
-        "Classificação ambiental",
-        options=classificacoes,
-        default=classificacoes
-    )
-
-    df_filtrado = df_filtrado[
-        df_filtrado[COL_CLASSIFICACAO]
-        .astype(str)
-        .isin(classes_selecionadas)
-    ]
-
-
-st.sidebar.divider()
-
-st.sidebar.caption(
-    "Os filtros selecionados atualizam os indicadores e gráficos."
+classes_selecionadas = st.sidebar.multiselect(
+    "Classificação ICAU-D",
+    classes,
+    default=classes
 )
 
+df = cidades.copy()
 
-# ------------------------------------------------------------
-# INDICADORES GERAIS
-# ------------------------------------------------------------
+if paises_selecionados:
+    df = df[df["country"].isin(paises_selecionados)]
 
-st.header("Indicadores gerais")
+if classes_selecionadas:
+    df = df[df["icaud_class"].isin(classes_selecionadas)]
 
-col1, col2, col3, col4 = st.columns(4)
+# Aplicação do filtro de cidades aos sensores
+if "cidade" in sensores.columns:
+    cidades_filtradas = df["name"].dropna().unique().tolist()
+    sensores_df = sensores[sensores["cidade"].isin(cidades_filtradas)].copy()
+else:
+    sensores_df = sensores.copy()
 
-quantidade_cidades = (
-    df_filtrado[COL_CIDADE].nunique()
-    if COL_CIDADE else len(df_filtrado)
+st.sidebar.markdown("---")
+st.sidebar.caption("Os gráficos são atualizados conforme os filtros selecionados.")
+
+
+# ============================================================
+# INDICADORES PRINCIPAIS
+# ============================================================
+
+st.markdown('<div class="secao"></div>', unsafe_allow_html=True)
+st.subheader("Visão geral")
+
+total_cidades = len(df)
+
+total_sensores = (
+    int(df["sensor_count"].fillna(0).sum())
+    if "sensor_count" in df.columns else len(sensores_df)
 )
-
-quantidade_registros = len(df_filtrado)
 
 media_icaud = (
-    df_filtrado[COL_ICAUD].mean()
-    if COL_ICAUD else np.nan
+    df["icaud_score"].mean()
+    if "icaud_score" in df.columns else np.nan
 )
 
 media_pm25 = (
-    df_filtrado[COL_PM25].mean()
-    if COL_PM25 else np.nan
+    df["pm25"].mean()
+    if "pm25" in df.columns else np.nan
 )
 
-col1.metric(
-    "Cidades analisadas",
-    f"{quantidade_cidades:,}"
+media_temperatura = (
+    df["temperature"].mean()
+    if "temperature" in df.columns else np.nan
 )
 
-col2.metric(
-    "Registros",
-    f"{quantidade_registros:,}"
+media_umidade = (
+    df["humidity"].mean()
+    if "humidity" in df.columns else np.nan
 )
 
-col3.metric(
+k1, k2, k3, k4 = st.columns(4)
+
+k1.metric("Cidades analisadas", f"{total_cidades:,}".replace(",", "."))
+k2.metric("Sensores cadastrados", f"{total_sensores:,}".replace(",", "."))
+k3.metric(
     "ICAU-D médio",
-    f"{media_icaud:.2f}" if pd.notna(media_icaud) else "N/D"
+    f"{media_icaud:.1f}" if pd.notna(media_icaud) else "—"
 )
-
-col4.metric(
+k4.metric(
     "PM2.5 médio",
-    f"{media_pm25:.2f}" if pd.notna(media_pm25) else "N/D"
+    f"{media_pm25:.1f}" if pd.notna(media_pm25) else "—"
 )
 
-st.divider()
+k5, k6 = st.columns(2)
 
-
-# ============================================================
-# VISUALIZACAO 1 - GRAFICO DE DISPERSAO
-# PM2.5 x ICAU-D
-# ============================================================
-
-st.header("01 | Relação entre poluição e conforto ambiental")
-
-st.caption(
-    "Análise da associação entre a concentração de partículas "
-    "finas no ar e o Índice de Conforto Ambiental Urbano."
+k5.metric(
+    "Temperatura média",
+    f"{media_temperatura:.1f} °C" if pd.notna(media_temperatura) else "—"
 )
 
-if COL_PM25 and COL_ICAUD:
-
-    dados_dispersao = df_filtrado[
-        [COL_PM25, COL_ICAUD]
-        + ([COL_CIDADE] if COL_CIDADE else [])
-    ].copy()
-
-    dados_dispersao = dados_dispersao.dropna(
-        subset=[COL_PM25, COL_ICAUD]
-    )
-
-    if len(dados_dispersao) >= 2:
-
-        fig_dispersao = px.scatter(
-            dados_dispersao,
-            x=COL_PM25,
-            y=COL_ICAUD,
-            hover_name=COL_CIDADE if COL_CIDADE else None,
-            color=COL_ICAUD,
-            color_continuous_scale=[
-                "#D96C6C",
-                "#E8B75B",
-                "#35C99A"
-            ],
-            labels={
-                COL_PM25: "PM2.5",
-                COL_ICAUD: "ICAU-D"
-            },
-            title="Concentração de PM2.5 em relação ao ICAU-D"
-        )
-
-        fig_dispersao.update_layout(
-            template="plotly_dark",
-            paper_bgcolor="#192824",
-            plot_bgcolor="#192824",
-            font_color="#E8F2EE",
-            height=480
-        )
-
-        st.plotly_chart(
-            fig_dispersao,
-            use_container_width=True
-        )
-
-        st.caption(
-            "Cada ponto representa uma cidade. A posição dos pontos "
-            "permite observar padrões de associação entre as variáveis."
-        )
-
-    else:
-        st.warning(
-            "Não existem registros suficientes para o gráfico de dispersão."
-        )
-
-else:
-    st.warning(
-        "Não foram identificadas as colunas de PM2.5 e ICAU-D."
-    )
-
-
-st.divider()
-
-
-# ============================================================
-# VISUALIZACAO 2 E 3 - GRAFICOS DE BARRAS HORIZONTAIS
-# RANKING DE CIDADES
-# ============================================================
-
-st.header("02 | Ranking comparativo das cidades")
-
-st.caption(
-    "Comparação entre as cidades com maiores e menores valores "
-    "registrados para o ICAU-D."
+k6.metric(
+    "Umidade média",
+    f"{media_umidade:.1f}%" if pd.notna(media_umidade) else "—"
 )
 
-if COL_CIDADE and COL_ICAUD:
 
-    ranking = (
-        df_filtrado[[COL_CIDADE, COL_ICAUD]]
-        .dropna()
-        .drop_duplicates(subset=[COL_CIDADE])
-        .sort_values(COL_ICAUD, ascending=False)
-    )
+# ============================================================
+# QUALIDADE DO AR E ICAU-D
+# ============================================================
 
-    col_top, col_bottom = st.columns(2)
+st.markdown("---")
+st.subheader("Qualidade do ar e conforto ambiental")
 
-    with col_top:
+esquerda, direita = st.columns(2)
 
-        top_10 = ranking.head(10).sort_values(COL_ICAUD)
+with esquerda:
+    if {"name", "pm25"}.issubset(df.columns):
+        ranking_pm25 = (
+            df[["name", "pm25"]]
+            .dropna()
+            .sort_values("pm25", ascending=False)
+            .head(10)
+            .sort_values("pm25", ascending=True)
+        )
 
-        fig_top = px.bar(
-            top_10,
-            x=COL_ICAUD,
-            y=COL_CIDADE,
+        fig = px.bar(
+            ranking_pm25,
+            x="pm25",
+            y="name",
             orientation="h",
-            title="10 maiores valores de ICAU-D",
+            title="10 cidades com maiores concentrações de PM2.5",
             labels={
-                COL_CIDADE: "Cidade",
-                COL_ICAUD: "ICAU-D"
+                "pm25": "PM2.5",
+                "name": "Cidade"
             },
-            color=COL_ICAUD,
-            color_continuous_scale=[
-                "#147D64",
-                "#35C99A"
-            ]
+            color="pm25",
+            color_continuous_scale="YlOrRd"
         )
 
-        fig_top.update_layout(
+        fig.update_layout(
             template="plotly_dark",
-            paper_bgcolor="#192824",
-            plot_bgcolor="#192824",
-            font_color="#E8F2EE",
-            showlegend=False,
+            paper_bgcolor=PAINEL,
+            plot_bgcolor=PAINEL,
             coloraxis_showscale=False,
-            height=460
+            yaxis_title=""
         )
 
-        st.plotly_chart(
-            fig_top,
-            use_container_width=True
+        st.plotly_chart(fig, use_container_width=True)
+
+with direita:
+    if {"name", "icaud_score"}.issubset(df.columns):
+        ranking_icaud = (
+            df[["name", "icaud_score"]]
+            .dropna()
+            .sort_values("icaud_score", ascending=False)
+            .head(10)
+            .sort_values("icaud_score", ascending=True)
         )
 
-    with col_bottom:
-
-        bottom_10 = ranking.tail(10).sort_values(COL_ICAUD)
-
-        fig_bottom = px.bar(
-            bottom_10,
-            x=COL_ICAUD,
-            y=COL_CIDADE,
+        fig = px.bar(
+            ranking_icaud,
+            x="icaud_score",
+            y="name",
             orientation="h",
-            title="10 menores valores de ICAU-D",
+            title="10 cidades com maiores índices ICAU-D",
             labels={
-                COL_CIDADE: "Cidade",
-                COL_ICAUD: "ICAU-D"
+                "icaud_score": "ICAU-D",
+                "name": "Cidade"
             },
-            color=COL_ICAUD,
-            color_continuous_scale=[
-                "#D96C6C",
-                "#E8B75B"
-            ]
+            color="icaud_score",
+            color_continuous_scale="Greens"
         )
 
-        fig_bottom.update_layout(
+        fig.update_layout(
             template="plotly_dark",
-            paper_bgcolor="#192824",
-            plot_bgcolor="#192824",
-            font_color="#E8F2EE",
-            showlegend=False,
+            paper_bgcolor=PAINEL,
+            plot_bgcolor=PAINEL,
             coloraxis_showscale=False,
-            height=460
+            yaxis_title=""
         )
 
-        st.plotly_chart(
-            fig_bottom,
-            use_container_width=True
-        )
-
-else:
-
-    st.warning(
-        "Não foram identificadas as colunas de cidade e ICAU-D."
-    )
-
-
-st.divider()
+        st.plotly_chart(fig, use_container_width=True)
 
 
 # ============================================================
-# VISUALIZACAO 4 - HEATMAP
-# MATRIZ DE CORRELACAO DE PEARSON
+# DISTRIBUIÇÃO DAS CLASSIFICAÇÕES
 # ============================================================
 
-st.header("03 | Matriz de correlação ambiental")
+st.markdown("---")
+st.subheader("Distribuição das condições ambientais")
 
-st.caption(
-    "Identificação da direção e da intensidade das associações "
-    "lineares entre as variáveis ambientais."
-)
+esquerda, direita = st.columns(2)
 
-variaveis_heatmap = [
-    COL_TEMP,
-    COL_UMIDADE,
-    COL_PM25,
-    COL_PM10,
-    COL_VENTO,
-    COL_ICAUD
+with esquerda:
+    if "icaud_class" in df.columns and not df.empty:
+        distribuicao = (
+            df["icaud_class"]
+            .value_counts()
+            .rename_axis("Classificação")
+            .reset_index(name="Quantidade")
+        )
+
+        fig = px.pie(
+            distribuicao,
+            names="Classificação",
+            values="Quantidade",
+            hole=0.55,
+            title="Cidades por classificação ICAU-D"
+        )
+
+        fig.update_layout(
+            template="plotly_dark",
+            paper_bgcolor=PAINEL
+        )
+
+        st.plotly_chart(fig, use_container_width=True)
+
+with direita:
+    if {"name", "temperature"}.issubset(df.columns):
+        temperatura = (
+            df[["name", "temperature"]]
+            .dropna()
+            .sort_values("temperature", ascending=False)
+            .head(10)
+            .sort_values("temperature", ascending=True)
+        )
+
+        fig = px.bar(
+            temperatura,
+            x="temperature",
+            y="name",
+            orientation="h",
+            title="10 cidades com maiores temperaturas",
+            labels={
+                "temperature": "Temperatura (°C)",
+                "name": "Cidade"
+            },
+            color="temperature",
+            color_continuous_scale="Oranges"
+        )
+
+        fig.update_layout(
+            template="plotly_dark",
+            paper_bgcolor=PAINEL,
+            plot_bgcolor=PAINEL,
+            coloraxis_showscale=False,
+            yaxis_title=""
+        )
+
+        st.plotly_chart(fig, use_container_width=True)
+
+
+# ============================================================
+# RELAÇÃO ENTRE PM2.5 E ICAU-D
+# ============================================================
+
+st.markdown("---")
+st.subheader("Relação entre poluição atmosférica e ICAU-D")
+
+if {"pm25", "icaud_score", "name", "icaud_class"}.issubset(df.columns):
+    dispersao = df[
+        ["name", "pm25", "icaud_score", "icaud_class"]
+    ].dropna()
+
+    if not dispersao.empty:
+        fig = px.scatter(
+            dispersao,
+            x="pm25",
+            y="icaud_score",
+            color="icaud_class",
+            hover_name="name",
+            size_max=14,
+            title="Concentração de PM2.5 e pontuação ICAU-D",
+            labels={
+                "pm25": "PM2.5",
+                "icaud_score": "Pontuação ICAU-D",
+                "icaud_class": "Classificação"
+            }
+        )
+
+        fig.update_traces(marker={"size": 12, "opacity": 0.8})
+
+        fig.update_layout(
+            template="plotly_dark",
+            paper_bgcolor=PAINEL,
+            plot_bgcolor=PAINEL
+        )
+
+        st.plotly_chart(fig, use_container_width=True)
+
+
+# ============================================================
+# MATRIZ DE CORRELAÇÃO
+# ============================================================
+
+st.markdown("---")
+st.subheader("Correlação entre indicadores ambientais")
+
+variaveis_correlacao = [
+    "temperature",
+    "humidity",
+    "pm25",
+    "pm10",
+    "wind_speed",
+    "icaud_score"
 ]
 
-variaveis_heatmap = [
-    coluna
-    for coluna in variaveis_heatmap
-    if coluna is not None and coluna in df_filtrado.columns
+variaveis_disponiveis = [
+    coluna for coluna in variaveis_correlacao
+    if coluna in df.columns and df[coluna].notna().sum() > 1
 ]
 
-if len(variaveis_heatmap) >= 2:
+if len(variaveis_disponiveis) >= 2:
+    matriz = df[variaveis_disponiveis].corr(numeric_only=True)
 
-    dados_correlacao = df_filtrado[
-        variaveis_heatmap
-    ].copy()
+    nomes = {
+        "temperature": "Temperatura",
+        "humidity": "Umidade",
+        "pm25": "PM2.5",
+        "pm10": "PM10",
+        "wind_speed": "Vento",
+        "icaud_score": "ICAU-D"
+    }
 
-    dados_correlacao = dados_correlacao.apply(
-        pd.to_numeric,
-        errors="coerce"
+    matriz.index = [nomes.get(x, x) for x in matriz.index]
+    matriz.columns = [nomes.get(x, x) for x in matriz.columns]
+
+    fig = go.Figure(
+        data=go.Heatmap(
+            z=matriz.values,
+            x=matriz.columns,
+            y=matriz.index,
+            colorscale="RdBu",
+            zmin=-1,
+            zmax=1,
+            text=np.round(matriz.values, 2),
+            texttemplate="%{text}",
+            colorbar={"title": "Correlação"}
+        )
     )
 
-    # Excluir variáveis sem variação
-    dados_correlacao = dados_correlacao.loc[
-        :,
-        dados_correlacao.nunique() > 1
-    ]
+    fig.update_layout(
+        title="Matriz de correlação de Pearson",
+        template="plotly_dark",
+        paper_bgcolor=PAINEL,
+        height=480
+    )
 
-    if dados_correlacao.shape[1] >= 2:
+    st.plotly_chart(fig, use_container_width=True)
 
-        correlacao = dados_correlacao.corr(
-            method="pearson"
+
+# ============================================================
+# COMPONENTES DO ICAU-D
+# ============================================================
+
+st.markdown("---")
+st.subheader("Composição do índice ICAU-D")
+
+componentes = {
+    "Temperatura": "cmp_temperature",
+    "Umidade": "cmp_humidity",
+    "Qualidade do ar": "cmp_airQuality",
+    "Vento": "cmp_wind"
+}
+
+componentes_disponiveis = [
+    nome for nome, coluna in componentes.items()
+    if coluna in df.columns
+]
+
+if componentes_disponiveis:
+    dados_componentes = []
+
+    for nome, coluna in componentes.items():
+        if coluna in df.columns:
+            dados_componentes.append({
+                "Componente": nome,
+                "Pontuação média": df[coluna].mean()
+            })
+
+    componentes_df = pd.DataFrame(dados_componentes).dropna()
+
+    if not componentes_df.empty:
+        fig = px.bar(
+            componentes_df,
+            x="Componente",
+            y="Pontuação média",
+            color="Pontuação média",
+            title="Pontuação média dos componentes do ICAU-D",
+            color_continuous_scale="Teal"
         )
 
-        nomes_legiveis = {
-            COL_TEMP: "Temperatura",
-            COL_UMIDADE: "Umidade",
-            COL_PM25: "PM2.5",
-            COL_PM10: "PM10",
-            COL_VENTO: "Vento",
-            COL_ICAUD: "ICAU-D"
-        }
-
-        correlacao = correlacao.rename(
-            index=nomes_legiveis,
-            columns=nomes_legiveis
+        fig.update_layout(
+            template="plotly_dark",
+            paper_bgcolor=PAINEL,
+            plot_bgcolor=PAINEL,
+            coloraxis_showscale=False
         )
 
-        fig_heatmap, ax = plt.subplots(
-            figsize=(10, 7)
+        st.plotly_chart(fig, use_container_width=True)
+
+
+# ============================================================
+# ANÁLISE DOS SENSORES
+# ============================================================
+
+st.markdown("---")
+st.subheader("Monitoramento e distribuição dos sensores")
+
+s1, s2 = st.columns(2)
+
+with s1:
+    if "source" in sensores_df.columns and not sensores_df.empty:
+        fontes = (
+            sensores_df["source"]
+            .value_counts()
+            .rename_axis("Fonte")
+            .reset_index(name="Quantidade")
         )
 
-        fig_heatmap.patch.set_facecolor("#192824")
-        ax.set_facecolor("#192824")
+        fig = px.bar(
+            fontes,
+            x="Quantidade",
+            y="Fonte",
+            orientation="h",
+            title="Sensores por fonte de dados",
+            color="Quantidade",
+            color_continuous_scale="Teal"
+        )
 
-        sns.heatmap(
-            correlacao,
-            annot=True,
-            cmap="RdYlGn",
-            vmin=-1,
-            vmax=1,
-            center=0,
-            fmt=".2f",
-            linewidths=0.7,
-            square=True,
-            cbar_kws={
-                "label": "Correlação de Pearson"
+        fig.update_layout(
+            template="plotly_dark",
+            paper_bgcolor=PAINEL,
+            plot_bgcolor=PAINEL,
+            coloraxis_showscale=False
+        )
+
+        st.plotly_chart(fig, use_container_width=True)
+
+with s2:
+    if "device_type" in sensores_df.columns and not sensores_df.empty:
+        tipos = (
+            sensores_df["device_type"]
+            .value_counts()
+            .rename_axis("Tipo de dispositivo")
+            .reset_index(name="Quantidade")
+        )
+
+        fig = px.pie(
+            tipos,
+            names="Tipo de dispositivo",
+            values="Quantidade",
+            hole=0.5,
+            title="Sensores por tipo de dispositivo"
+        )
+
+        fig.update_layout(
+            template="plotly_dark",
+            paper_bgcolor=PAINEL
+        )
+
+        st.plotly_chart(fig, use_container_width=True)
+
+
+# ============================================================
+# VARIÁVEIS FORNECIDAS PELOS SENSORES
+# ============================================================
+
+st.markdown("---")
+st.subheader("Variáveis monitoradas pelos sensores")
+
+if "provides" in sensores_df.columns and not sensores_df.empty:
+    lista_variaveis = []
+
+    for valor in sensores_df["provides"].dropna():
+        itens = re.split(r"[,;|]", str(valor))
+
+        for item in itens:
+            item = item.strip()
+
+            if item and item.lower() not in ["nan", "none"]:
+                lista_variaveis.append(item)
+
+    if lista_variaveis:
+        variaveis_df = (
+            pd.Series(lista_variaveis)
+            .value_counts()
+            .rename_axis("Variável")
+            .reset_index(name="Quantidade de registros")
+        )
+
+        fig = px.bar(
+            variaveis_df,
+            x="Quantidade de registros",
+            y="Variável",
+            orientation="h",
+            title="Frequência das variáveis disponibilizadas",
+            color="Quantidade de registros",
+            color_continuous_scale="Greens"
+        )
+
+        fig.update_layout(
+            template="plotly_dark",
+            paper_bgcolor=PAINEL,
+            plot_bgcolor=PAINEL,
+            coloraxis_showscale=False
+        )
+
+        st.plotly_chart(fig, use_container_width=True)
+
+
+# ============================================================
+# MAPA DAS CIDADES
+# ============================================================
+
+st.markdown("---")
+st.subheader("Distribuição geográfica das cidades monitoradas")
+
+colunas_mapa = ["name", "lat", "lon", "icaud_score", "icaud_class"]
+
+if all(coluna in df.columns for coluna in colunas_mapa):
+    mapa = df[colunas_mapa].dropna(subset=["lat", "lon"])
+
+    if not mapa.empty:
+        fig = px.scatter_mapbox(
+            mapa,
+            lat="lat",
+            lon="lon",
+            color="icaud_score",
+            size="icaud_score",
+            hover_name="name",
+            hover_data={
+                "icaud_class": True,
+                "icaud_score": True,
+                "lat": False,
+                "lon": False
             },
-            annot_kws={
-                "color": "#101A18",
-                "weight": "bold"
+            color_continuous_scale="RdYlGn",
+            size_max=18,
+            zoom=1,
+            title="Localização das cidades e pontuação ICAU-D"
+        )
+
+        fig.update_layout(
+            mapbox_style="carto-darkmatter",
+            mapbox_zoom=1,
+            mapbox_center={
+                "lat": float(mapa["lat"].mean()),
+                "lon": float(mapa["lon"].mean())
             },
-            ax=ax
+            template="plotly_dark",
+            paper_bgcolor=PAINEL,
+            margin={"r": 0, "t": 50, "l": 0, "b": 0},
+            height=550
         )
 
-        ax.set_title(
-            "EcoSense | Matriz de Correlação",
-            color="#E8F2EE",
-            fontsize=15,
-            pad=18
-        )
-
-        ax.tick_params(
-            colors="#E8F2EE"
-        )
-
-        ax.xaxis.label.set_color("#E8F2EE")
-        ax.yaxis.label.set_color("#E8F2EE")
-
-        fig_heatmap.tight_layout()
-
-        st.pyplot(
-            fig_heatmap,
-            use_container_width=True
-        )
-
-        plt.close(fig_heatmap)
-
-        st.caption(
-            "Valores próximos de +1 indicam associação positiva; "
-            "próximos de -1 indicam associação negativa; "
-            "próximos de zero indicam associação linear fraca."
-        )
-
-    else:
-
-        st.warning(
-            "Não há variabilidade suficiente para calcular "
-            "a matriz de correlação."
-        )
-
-else:
-
-    st.warning(
-        "Não foram encontradas variáveis numéricas suficientes "
-        "para construir o heatmap."
-    )
-
-
-st.divider()
+        st.plotly_chart(fig, use_container_width=True)
 
 
 # ============================================================
-# VISUALIZACAO 5 - LINHA TEMPORAL
-# HISTORICO DE MEDICOES DOS SENSORES
+# TABELA DE CIDADES
 # ============================================================
 
-st.header("04 | Evolução temporal das medições")
+st.markdown("---")
+st.subheader("Dados das cidades")
 
-st.caption(
-    "Análise da variação dos indicadores ambientais ao longo "
-    "do tempo, conforme a disponibilidade de registros históricos."
-)
+colunas_exibicao = [
+    "name",
+    "country",
+    "sensor_count",
+    "temperature",
+    "humidity",
+    "pm25",
+    "pm10",
+    "wind_speed",
+    "icaud_score",
+    "icaud_class"
+]
 
-
-# Procurar o arquivo sensores.csv
-CAMINHO_SENSORES = os.path.join(
-    BASE_DIR,
-    "sensores.csv"
-)
-
-if not os.path.exists(CAMINHO_SENSORES):
-
-    CAMINHO_SENSORES = os.path.join(
-        BASE_DIR,
-        "analytics",
-        "outputs",
-        "sensores.csv"
-    )
-
-
-if os.path.exists(CAMINHO_SENSORES):
-
-    try:
-
-        df_sensores = pd.read_csv(
-            CAMINHO_SENSORES
-        )
-
-        col_data = localizar_coluna_dashboard(
-            df_sensores,
-            [
-                "recordedAt",
-                "timestamp",
-                "datetime",
-                "date",
-                "data_hora",
-                "datahora",
-                "createdAt",
-                "measuredAt",
-                "lastUpdated"
-            ]
-        )
-
-        variaveis_temporais = {
-            "Temperatura": [
-                "temperature",
-                "temp",
-                "temperatura"
-            ],
-            "Umidade": [
-                "humidity",
-                "umidade",
-                "relative_humidity"
-            ],
-            "PM2.5": [
-                "pm25",
-                "pm2_5",
-                "pm2.5"
-            ],
-            "PM10": [
-                "pm10"
-            ],
-            "Velocidade do vento": [
-                "windSpeed",
-                "wind_speed",
-                "windspeed"
-            ]
-        }
-
-        colunas_temporais = {}
-
-        for nome, alternativas in variaveis_temporais.items():
-
-            coluna = localizar_coluna_dashboard(
-                df_sensores,
-                alternativas
-            )
-
-            if coluna:
-                colunas_temporais[nome] = coluna
-
-
-        if col_data and colunas_temporais:
-
-            dados_tempo = df_sensores.copy()
-
-            dados_tempo[col_data] = pd.to_datetime(
-                dados_tempo[col_data],
-                errors="coerce",
-                utc=True
-            )
-
-            dados_tempo = dados_tempo.dropna(
-                subset=[col_data]
-            )
-
-            if not dados_tempo.empty:
-
-                variavel_escolhida = st.selectbox(
-                    "Selecione o indicador ambiental",
-                    options=list(colunas_temporais.keys())
-                )
-
-                coluna_escolhida = colunas_temporais[
-                    variavel_escolhida
-                ]
-
-                dados_tempo[coluna_escolhida] = pd.to_numeric(
-                    dados_tempo[coluna_escolhida],
-                    errors="coerce"
-                )
-
-                dados_tempo = dados_tempo.dropna(
-                    subset=[coluna_escolhida]
-                )
-
-                # Agrupar medições por hora
-                dados_tempo["Periodo"] = (
-                    dados_tempo[col_data].dt.floor("h")
-                )
-
-                serie_temporal = (
-                    dados_tempo
-                    .groupby("Periodo")[coluna_escolhida]
-                    .mean()
-                    .reset_index()
-                    .sort_values("Periodo")
-                )
-
-                if len(serie_temporal) >= 2:
-
-                    fig_temporal = px.line(
-                        serie_temporal,
-                        x="Periodo",
-                        y=coluna_escolhida,
-                        markers=True,
-                        title=(
-                            "Evolução temporal de "
-                            + variavel_escolhida
-                        ),
-                        labels={
-                            "Periodo": "Data e hora",
-                            coluna_escolhida: variavel_escolhida
-                        }
-                    )
-
-                    fig_temporal.update_traces(
-                        line={
-                            "color": "#35C99A",
-                            "width": 3
-                        },
-                        marker={
-                            "size": 7
-                        }
-                    )
-
-                    fig_temporal.update_layout(
-                        template="plotly_dark",
-                        paper_bgcolor="#192824",
-                        plot_bgcolor="#192824",
-                        font_color="#E8F2EE",
-                        height=450
-                    )
-
-                    st.plotly_chart(
-                        fig_temporal,
-                        use_container_width=True
-                    )
-
-                    st.caption(
-                        "Os pontos representam médias horárias "
-                        "das medições disponíveis no arquivo."
-                    )
-
-                else:
-
-                    st.warning(
-                        "Existem menos de duas medições válidas. "
-                        "Não é possível construir uma linha temporal."
-                    )
-
-            else:
-
-                st.warning(
-                    "A coluna de data/hora não contém datas válidas."
-                )
-
-        else:
-
-            st.warning(
-                "O arquivo sensores.csv não possui uma coluna "
-                "de data/hora ou variáveis ambientais reconhecidas."
-            )
-
-    except Exception as erro:
-
-        st.error(
-            f"Não foi possível processar sensores.csv: {erro}"
-        )
-
-else:
-
-    st.warning(
-        "O arquivo sensores.csv não foi encontrado. "
-        "A visualização temporal depende de registros históricos "
-        "com data/hora e valores de medição."
-    )
-
-
-st.divider()
-
-
-# ============================================================
-# TABELA DE DADOS
-# ============================================================
-
-st.header("Dados detalhados")
+colunas_exibicao = [
+    coluna for coluna in colunas_exibicao
+    if coluna in df.columns
+]
 
 st.dataframe(
-    df_filtrado,
+    df[colunas_exibicao].sort_values(
+        by="icaud_score",
+        ascending=False
+    ) if "icaud_score" in colunas_exibicao else df[colunas_exibicao],
     use_container_width=True,
     hide_index=True
 )
 
 
 # ============================================================
-# DOWNLOAD DOS DADOS FILTRADOS
+# TABELA DE SENSORES
 # ============================================================
 
-csv_download = df_filtrado.to_csv(
-    index=False,
-    encoding="utf-8-sig"
-)
+st.markdown("---")
+st.subheader("Inventário de sensores")
 
-st.download_button(
-    label="Baixar dados filtrados em CSV",
-    data=csv_download,
-    file_name="ecosense_dados_filtrados.csv",
-    mime="text/csv"
+colunas_sensores = [
+    "cidade",
+    "sensor_id",
+    "name",
+    "source",
+    "device_type",
+    "last_seen",
+    "provides"
+]
+
+colunas_sensores = [
+    coluna for coluna in colunas_sensores
+    if coluna in sensores_df.columns
+]
+
+st.dataframe(
+    sensores_df[colunas_sensores],
+    use_container_width=True,
+    hide_index=True
 )
 
 
 # ============================================================
-# RODAPE
+# EXPORTAÇÃO
 # ============================================================
 
-st.divider()
+st.markdown("---")
+st.subheader("Exportar dados")
 
-st.markdown(
-    """
-    <div style="
-        text-align:center;
-        color:#9FB3AA;
-        padding:15px;
-        font-size:13px;
-    ">
-        EcoSense | Projeto Integrador<br>
-        Inteligência de Negócios aplicada à análise ambiental
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+e1, e2 = st.columns(2)
+
+with e1:
+    st.download_button(
+        label="Baixar cidades filtradas (CSV)",
+        data=df.to_csv(index=False).encode("utf-8-sig"),
+        file_name="ecosense_cidades_filtradas.csv",
+        mime="text/csv",
+        use_container_width=True
+    )
+
+with e2:
+    st.download_button(
+        label="Baixar sensores filtrados (CSV)",
+        data=sensores_df.to_csv(index=False).encode("utf-8-sig"),
+        file_name="ecosense_sensores_filtrados.csv",
+        mime="text/csv",
+        use_container_width=True
+    )
+
+
+# ============================================================
+# RODAPÉ
+# ============================================================
+
+st.markdown("---")
+
+st.markdown("""
+<div style="text-align:center; color:#A9B9B2; padding:18px;">
+    <strong>EcoSense</strong> | Inteligência Ambiental<br>
+    Análise de dados ambientais e indicadores urbanos
+</div>
+""", unsafe_allow_html=True)
